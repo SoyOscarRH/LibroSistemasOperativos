@@ -2,6 +2,7 @@
 % *********************        SISTEMAS OPERATIVOS            ****************************
 % ****************************************************************************************
 
+
 % =======================================================
 % =======         HEADER FOR DOCUMENT        ============
 % =======================================================
@@ -10,6 +11,7 @@
     \usepackage[margin=1.2in]{geometry}                             %Margins and Geometry pacakge
     \usepackage{ifthen}                                             %Allow simple programming
     \usepackage{hyperref}                                           %Create MetaData for a PDF and LINKS!
+    \hypersetup{pageanchor=false}                                   %Solve 'double page 1' warnings in build
     \setlength{\parindent}{0pt}                                     %Eliminate ugly indentation
     \author{Oscar Andrés Rosas}                                     %Who I am
 
@@ -29,7 +31,6 @@
     % *********   GRAPHICS AND IMAGES *********
     \usepackage{graphicx}                                           %Allow to create graphics
     \usepackage{wrapfig}                                            %Allow to create images
-    \usepackage{xcolor}                                             %Allow to create images
     \graphicspath{ {Graphics/} }                                    %Where are the images :D
 
     % *********   LISTS AND TABLES ***********
@@ -41,6 +42,7 @@
     \usepackage{tabularx}                                           %Lets make tables awesome
     \usepackage{multirow}                                           %Lets make tables awesome
     \usepackage{multicol}                                           %Create multicolumns
+
 
     % *********   HEADERS AND FOOTERS ********
     \usepackage{fancyhdr}                                           %Lets make awesome headers/footers
@@ -90,20 +92,11 @@
     {\end{footnotesize}\end{adjustwidth}}                           %that's it
 
 
-    % =====  GENERAL COLOR  =========
-    \definecolor{IndigoMD}{HTML}{3F51B5}                            %Use: Color :D
-    \definecolor{DeepPurpleMD}{HTML}{673AB7}                        %Use: Color :D
-    \definecolor{TealMD}{HTML}{009688}                              %Use: Color :D
-
-    \newenvironment{ColorText}[1]{                                  %Use: \begin{ColorText}
-        \leavevmode\color{#1}\ignorespaces}                         %That's is!
-
-            
     % =====  GENERAL MATH  ==========
     \DeclareMathOperator \Space {\quad}                             %Use: \Space for a cool mega space
     \DeclareMathOperator \MiniSpace {\;}                            %Use: \Space for a cool mini space
     \newcommand \Such {\MiniSpace|\MiniSpace}                       %Use: \Such like in sets
-    \newcommand \Also {\Space \text{y} \Space}                      %Use: \Also so it's look cool
+    \newcommand \Also {\MiniSpace \text{y} \MiniSpace}              %Use: \Also so it's look cool
     \newcommand \Remember[1]{\Space\text{\scriptsize{#1}}}          %Use: \Remember so it's look cool
 
     \newtheorem{Theorem}{Teorema}[section]                          %Use: \begin{Theorem}[Name]\label{Nombre}...
@@ -140,6 +133,7 @@
 
     % === LINEAL ALGEBRA & VECTORS ===
     \DeclareMathOperator \LinealTransformation {\mathcal{T}}        %Use: \LinealTransformation for a cool T
+    \newcommand{\Mag}[1]{\left| #1 \right|}                         %Use: \Mag {Info} 
 
     \newcommand{\pVector}[1]{                                       %Use: \pVector {Matrix Notation} use parentesis
         \ensuremath{\begin{pmatrix}#1\end{pmatrix}}                 %Example: \pVector{a\\b\\c} or \pVector{a&b&c} 
@@ -153,7 +147,6 @@
     \newcommand{\Vector}[1]{                                        %Use: \Vector {Matrix Notation} no parentesis
         \ensuremath{\begin{matrix}#1\end{matrix}}                   %Example: \Vector{a\\b\\c} or \Vector{a&b&c}
     }
-    \newcommand{\uvec}[1]{\boldsymbol{\hat{\textbf{$#1$}}}}         %Use: Unitary Vector
 
     % MATRIX
     \makeatletter                                                   %Example: \begin{matrix}[cc|c]
@@ -165,28 +158,52 @@
     \makeatother                                                    %WTF! IS THIS
 
     % TRIGONOMETRIC FUNCTIONS
-    \newcommand{\Cos}[1]{\cos\Wrap{#1}}
-    \newcommand{\Sin}[1]{\sin\Wrap{#1}}
-
-    % === CALCULUS ===                               
-    \newcommand \Derivate[2] {\dfrac{d #1}{d#2}}                    %Use: Derivate Notation
-    \newcommand \Partial[2] {\dfrac{\partial #1}{\partial#2}}       %Use: Derivate Partial Notation
-    
-    \newcommand \pDerivate[2]{\Derivate{\Wrap{#1}}{#2}}             %But with cool parentesis
-    \newcommand \pPartial[2]{\Partial{\Wrap{#1}}{#2}}               %Use: Derivate Partial
-    
-    \newcommand \SemiDerivate[1]{\Wrap{\dfrac{d}{d#1}}}             %Use: Derivate Notation
-    \newcommand \SemiPartial[1]{\Wrap{\dfrac{\partial}{\partial#1}}}%Use: Derivate Partial Notation
-
+    \newcommand{\Cos}[1]{\cos\Wrap{#1}}                             %Simple wrappers
+    \newcommand{\Sin}[1]{\sin\Wrap{#1}}                             %Simple wrappers
 
     % === COMPLEX ANALYSIS ===
     \newcommand \Cis[1]  {\Cos{#1} + i \Sin{#1}}                    %Use: \Cis for cos(x) + i sin(x)
     \newcommand \pCis[1] {\Wrap{\Cis{#1}}}                          %Use: \pCis for the same ut parantesis
+    \newcommand \bCis[1] {\Brackets{\Cis{#1}}}                      %Use: \bCis for the same to Brackets
+
+    % === CALCULUS ===
+    \newcommand \Partial[2] {\dfrac{\partial #1}{\partial #2}}      %Use: \Partial for simple use
+
+    % =====  GENERAL COLOR  =========
+    \definecolor{TealMD}{HTML}{009688}                              %Use: Color :D        
+    \definecolor{IndigoMD}{HTML}{3F51B5}                            %Use: Color :D
+    \definecolor{Green100MD}{HTML}{DCEDC8}                          %Use: Color :D
+    \definecolor{Blue300MD}{HTML}{64B5F6}                           %Use: Color :D
+    \definecolor{DeepPurpleMD}{HTML}{673AB7}                        %Use: Color :D
+    \definecolor{BlueGrey100MD}{HTML}{CFD8DC}                       %Use: Color :D
+    \definecolor{BlueGrey800MD}{HTML}{37474F}                       %Use: Color :D
+    \definecolor{BlueGrey200MD}{HTML}{B0BEC5}                       %Use: Color :D
+    \definecolor{Lime300MD}{HTML}{E6EE9C}                           %Use: Color :D
+
+    \newenvironment{ColorText}[1]{                                  %Use: \begin{ColorText}
+        \leavevmode\color{#1}\ignorespaces}                         %That's is!
 
 
-
-
-
+    % =====  CODE EDITOR =========
+    \lstdefinestyle{CompilandoStyle} {                              %This is Code Style
+        backgroundcolor=\color{BlueGrey800MD},                      %Background Color  
+        basicstyle=\tiny\color{white},                              %Font color
+        commentstyle=\color{BlueGrey200MD},                         %Comment color
+        stringstyle=\color{Lime300MD},                              %String color
+        keywordstyle=\color{Blue300MD},                             %keywords color
+        numberstyle=\tiny\color{TealMD},                            %Size of a number
+        frame=shadowbox,                                            %Adds a frame around the code
+        breakatwhitespace=true,                                     %Style   
+        showstringspaces=false,                                     %Hate those spaces                  
+        breaklines=true,                                            %Style                   
+        keepspaces=true,                                            %Style                   
+        numbers=left,                                               %Style                   
+        numbersep=10pt,                                             %Style 
+        xleftmargin=\parindent,                                     %Style 
+        tabsize=4                                                   %Style 
+    }
+ 
+    \lstset{style=CompilandoStyle}                                  %Use this style
 
 
 
@@ -201,11 +218,11 @@
     \center
     % ============ UNIVERSITY NAME AND DATA =========
     \textbf{\textsc{\Large Proyecto Compilando Conocimiento}}\\[1.0cm] 
-    \textsc{\Large Programación}\\[1.0cm] 
+    \textsc{\Large Ciencias de la Computación}\\[1.0cm] 
 
     % ============ NAME OF THE DOCUMENT  ============
     \rule{\linewidth}{0.5mm} \\[1.0cm]
-        { \huge \bfseries Bases de Sistemas Operativos}\\[1.0cm] 
+        { \huge \bfseries Sistemas Operativos}\\[1.0cm] 
     \rule{\linewidth}{0.5mm} \\[2.0cm]
     
     % ====== SEMI TITLE ==========
@@ -256,46 +273,48 @@
             \textbf{ administración de un equipo de computo}, de forma tal que fuese más sencillo
             trabajar con el y aprovechar al máximo sus recursos.
     
-            "Un sistema operativo es un programa encargado de controlar todos lor recursos de
-            una copmutadora"
+            \Quote{Un sistema operativo es un programa encargado de controlar todos lor recursos de
+            una computadora}
 
             \subsection{Definición Formal}
 
                 \Quote{Un sistema operativo es un software de base compuesto por un conjunto
-                de administradores encargados de la administracion de cada uno de los recursos
-                de un equipo de coputo de forma rápida y eficiente.}
+                de administradores encargados de la administración (valga la redundancia) de cada uno de
+                los recursos de un equipo de coputo de forma rápida y eficiente.}
 
 
-                \subsection*{Características}
+            \subsection{Características}
 
-                    \begin{itemize}
-                        \item 
-                            Un sistema operativo es un software de base debido a que es una plataforma que permite
-                            la creación y ejecución de aplicaciones desarrolladas para el propio sistema.
-                            Como software de base, el sistem operativo ofrece interfaces para la creación o ejecución
-                            de las aplicaciones desarrolladas.
+                \begin{itemize}
+                    \item 
+                        \textbf{Un sistema operativo es un software de base} debido a que es una plataforma que permite
+                        la creación y ejecución de aplicaciones desarrolladas para el propio sistema.
+                        Como software de base, el sistem operativo ofrece interfaces para la creación o ejecución
+                        de las aplicaciones desarrolladas.
 
-                        \item
-                            Un sistema operativo esta compuesto de un conjunto de administradores, los cuales controlan
-                            todos los recursos del equipo de computo, estos administradores son: 
+                        Incluso mucha gente ve al sistema operativo como una biblioteca estandar.
 
-                            \begin{itemize}
-                                \item Administrador de Procesos
-                                \item Admin. de Memoria 
-                                \item Admin. de Entrada / Salida 
-                                \item Admin. de Archivos 
-                                \item Admin. de Red 
-                            \end{itemize}
+                    \item
+                        Un sistema operativo esta compuesto de un conjunto de administradores, los cuales controlan
+                        todos los recursos del equipo de computo, estos administradores son: 
 
-                        \item
-                            Un sistema operativo debe ejecutarse lo más rapido posible, evitando quitarle tiempo de
-                            procesamiento a las aplicaciones de los usuarios, por otro lado debe administrar cada uno
-                            de los recursos del equipo de cómputo de forma eficiente, maximizando el uso de cada
-                            recurso controlado. 
-                            La rápidez y eficiencia es uno de los principales u objetivos que un Sistema Operativo debe
-                            cumplir durante su ejecución.
-                
-                    \end{itemize}
+                        \begin{itemize}
+                            \item Administrador de Procesos
+                            \item Admin. de Memoria 
+                            \item Admin. de Entrada / Salida 
+                            \item Admin. de Archivos 
+                            \item Admin. de Red 
+                        \end{itemize}
+
+                    \item
+                        Un sistema operativo debe ejecutarse lo más rapido posible, evitando quitarle tiempo de
+                        procesamiento a las aplicaciones de los usuarios, por otro lado debe administrar cada uno
+                        de los recursos del equipo de cómputo de forma eficiente, maximizando el uso de cada
+                        recurso controlado. 
+                        La rápidez y eficiencia es uno de los principales u objetivos que un Sistema Operativo debe
+                        cumplir durante su ejecución.
+            
+                \end{itemize}
        
 
         % ==============================================
@@ -303,18 +322,18 @@
         % ==============================================
         \section{Tipo de Sistemas}
 
-            Sistemas Genericos:
+            \subsubsection{Sistemas Genéricos:}
             \begin{itemize}
                 \item Por lotes sencillos
                 \item Por lotes multiprogramados
                 \item De tiempo compartido
             \end{itemize}
 
-            Sistemas Distribuidos:
+            \subsubsection{Sistemas Especializados:}
             \begin{itemize}
                 \item Distribuidos: En estos los procesadores no comparten el mismo reloj ni memoria, son sistemas
                     debilmente acomplados
-                \item Paralela: Los procesadores comparten los recursos como la memoria, son sistemas fuertemente
+                \item Paralelos: Los procesadores comparten los recursos como la memoria, son sistemas fuertemente
                     acomplados
             \end{itemize}     
 
@@ -328,7 +347,7 @@
                 \item
                     \textbf{Spooling: }
 
-                    SPOOL significa \Quote{Simultaneous Peripheral Operation On-Line}.
+                    Spool significa \Quote{Simultaneous Peripheral Operation On-Line}.
 
                     En realidad, lo que sucede aquí es que hay buffer para almacenar los datos,
                     por lo general el disco.
@@ -410,160 +429,160 @@
 
 
 
-    % ===============================================================================
-    % ===========          PARTES DEL SISTEMA OPERATIVO           ===================
-    % ===============================================================================
-    \chapter{Partes del Sistema Operativo}
-
-        % ==============================================
-        % =============    VISTA GENERAL    ============
-        % ==============================================
+        % ===============================================================================
+        % ===========          PARTES DEL SISTEMA OPERATIVO           ===================
+        % ===============================================================================
         \clearpage
-        \section{Vista General}
+        \section{Partes del Sistema Operativo}
 
-            Un Sistema Operativo como cualquier otro software sigue un modelo de ingeniería de
-            software para su diseño y construcción, en modelo que se usa es el denominado por capas,
-            este modelo nos dice que cada capa se encarga de realizar una funcionalidad concreta
-            dentro del sistema operativo.
+            % ==============================================
+            % =============    VISTA GENERAL    ============
+            % ==============================================
+            \subsection{Vista General}
 
-            Un sistema operativo normalmente está integrado por las siguientes capas:
-            \begin{itemize}
-                \item Hardware
-                \item Kernel
-                \item Servicios        
-                \item Aplicaciones
-            \end{itemize}  
+                Un Sistema Operativo como cualquier otro software sigue un modelo de ingeniería de
+                software para su diseño y construcción, en modelo que se usa es el denominado por capas,
+                este modelo nos dice que cada capa se encarga de realizar una funcionalidad concreta
+                dentro del sistema operativo.
 
-            Estas capas para llevar a cabo sus funciones requieren comunicarse con cada adyacentes,
-            para lograr esta comunicación se usan las interfaces,
-            estas son:
-            \begin{itemize}
-                \item Interfaz de Comandos
-                \item Interfaz de Llamafas al Sistema
-                \item Interfaz de Interrupciones        
-            \end{itemize}  
+                Un sistema operativo normalmente está integrado por las siguientes capas:
+                \begin{itemize}
+                    \item Hardware
+                    \item Kernel
+                    \item Servicios        
+                    \item Aplicaciones
+                \end{itemize}  
+
+                Estas capas para llevar a cabo sus funciones requieren comunicarse con cada adyacentes,
+                para lograr esta comunicación se usan las interfaces,
+                estas son:
+                \begin{itemize}
+                    \item Interfaz de Comandos
+                    \item Interfaz de Llamafas al Sistema
+                    \item Interfaz de Interrupciones        
+                \end{itemize}  
 
 
-            Graficamente las podemos ver como:
+                Graficamente las podemos ver como:
 
-            \begin{figure}[h!]
-                \centering
-                \includegraphics[width=0.55\textwidth]{Capas}
-            \end{figure}
+                \begin{figure}[h!]
+                    \centering
+                    \includegraphics[width=0.55\textwidth]{Capas}
+                \end{figure}
 
-        % ==============================================
-        % =============        CAPAS        ============
-        % ==============================================
+            % ==============================================
+            % =============        CAPAS        ============
+            % ==============================================
+            \clearpage
+            \subsection{Capas}    
+
+                \begin{itemize}
+                    \item
+                        \textbf{Capa de Aplicaciones}
+
+                        Esta capa se encarga de mantener cualquier aplicación que el usuario ejecutará
+                        en el sistema operativo, siendo la capa con la que el usuario tendrá contacto.
+
+                        Se encarga de mantener todas las aplicaciones que tu conoces normalmente.
+
+
+                    \item
+                        \textbf{Capa de Servicios}
+
+                        Esta capa se encarga de mantener los servicio que apoyan el funcionamiento
+                        del sistema operativo, teniendo servicios de seguridad, de mantenimiento,
+                        entre otras.
+
+                        A veces se suele unir y dividir sus funciones entre la capa de aplicaciones
+                        y el kernel.
+
+
+                    \item
+                        \textbf{Capa de Kernel o Núcleo}
+
+                        Esta es la capa principal del sistema operativo, esta mantiene a los 5
+                        administradores que componen a todo sistema operativo.
+
+
+                    \item
+                        \textbf{Capa de Hardware}
+
+                        Esta es la capa mas baja del sistema, se encarga de mantener todas las interfaces
+                        de comunicación con el hardware.
+
+                \end{itemize}
+
+
+            % ==============================================
+            % =========       INTERFACES        ============
+            % ==============================================
+            \clearpage
+            \subsection{Interfaces}    
+                
+                \begin{itemize}
+                    \item
+                        \textbf{Interfaz de Comandos}
+
+                        Esta interfaz comunica a la capa de aplicaciones con la de
+                        servicios o a la capa del kernel.
+
+                        Esta compuesta de por todos los comandos disponibles en el sistema
+                        operativo, siendo la interfaz de interacción inmediata que el usuario
+                        posee para comunicarse con el sistema operativo.
+
+                    \item
+                        \textbf{Interfaz de Llamadas al Sistema}
+
+                        Esta interfaz comunica a la capa de servicios con la de
+                        aplicaciones o a la capa del kernel.
+
+                        Esta compuesta por unas APIs (es decir funciones o métodos)
+                        que el sistema operativo pone a dispoción de los usuarios a
+                        través de un lenguaje de alto nivel, por esto se le conoce como una
+                        comunicación indirecta.
+
+                    \item
+                        \textbf{Interfaz de Interrupciones}
+
+                        Esta interfaz comunica a la capa del kernel con la del hardware.
+
+                        Esta compuesta por un conjunto de interrupciones o servicios de 
+                        interrupción que el sistema operativo pone a dispoción de los
+                        usuarios por medio de un lenguaje de programación de bajo nivel,
+                        por esto se le conoce como una comunicación indirecta.
+
+                \end{itemize}
+
+
+
+        % ===============================================================================
+        % ===========          FUNCIONAMIENTO DE UN PROCESADOR        ===================
+        % ===============================================================================
         \clearpage
-        \section{Capas}    
+        \section{Funcionamiento de un Procesador}
 
-            \begin{itemize}
-                \item
-                    \textbf{Capa de Aplicaciones}
+            % ==============================================
+            % ===========     PIPELINE          ============
+            % ==============================================
+            \subsection{Pipeline}
 
-                    Esta capa se encarga de mantener cualquier aplicación que el usuario ejecutará
-                    en el sistema operativo, siendo la capa con la que el usuario tendrá contacto.
+                Pipelining es una técnica de implementación donde múltiples instrucciones se superponen en
+                la ejecución.
 
-                    Se encarga de mantener todas las aplicaciones que tu conoces normalmente.
+                La tubería de la computadora se divide en etapas. Cada etapa completa una parte de una instrucción en paralelo. Las etapas se conectan una a la otra para formar un tubo - las instrucciones entran en un extremo, avanzan por las etapas y salen al otro extremo.
 
+                Pipelining no disminuye el tiempo para la ejecución individual de la instrucción.
+                En su lugar, aumenta el rendimiento de la instrucción.
+                El rendimiento de la tubería de instrucciones está determinado por la frecuencia con que una
+                instrucción sale de la tubería.
 
-                \item
-                    \textbf{Capa de Servicios}
+                Debido a que las etapas del tubo están enganchadas juntas, todas las etapas deben estar listas
+                para proceder al mismo tiempo
+                Llamamos el tiempo requerido para mover una instrucción un paso más en la tubería un ciclo de máquina.
+                La longitud del ciclo de la máquina está determinada por el tiempo requerido para la etapa de tubería
+                más lenta.
 
-                    Esta capa se encarga de mantener los servicio que apoyan el funcionamiento
-                    del sistema operativo, teniendo servicios de seguridad, de mantenimiento,
-                    entre otras.
-
-                    A veces se suele unir y dividir sus funciones entre la capa de aplicaciones
-                    y el kernel.
-
-
-                \item
-                    \textbf{Capa de Kernel o Núcleo}
-
-                    Esta es la capa principal del sistema operativo, esta mantiene a los 5
-                    administradores que componen a todo sistema operativo.
-
-
-                \item
-                    \textbf{Capa de Hardware}
-
-                    Esta es la capa mas baja del sistema, se encarga de mantener todas las interfaces
-                    de comunicación con el hardware.
-
-            \end{itemize}
-
-
-        % ==============================================
-        % =========       INTERFACES        ============
-        % ==============================================
-        \clearpage
-        \section{Interfaces}    
-            
-            \begin{itemize}
-                \item
-                    \textbf{Interfaz de Comandos}
-
-                    Esta interfaz comunica a la capa de aplicaciones con la de
-                    servicios o a la capa del kernel.
-
-                    Esta compuesta de por todos los comandos disponibles en el sistema
-                    operativo, siendo la interfaz de interacción inmediata que el usuario
-                    posee para comunicarse con el sistema operativo.
-
-                \item
-                    \textbf{Interfaz de Llamadas al Sistema}
-
-                    Esta interfaz comunica a la capa de servicios con la de
-                    aplicaciones o a la capa del kernel.
-
-                    Esta compuesta por unas APIs (es decir funciones o métodos)
-                    que el sistema operativo pone a dispoción de los usuarios a
-                    través de un lenguaje de alto nivel, por esto se le conoce como una
-                    comunicación indirecta.
-
-                \item
-                    \textbf{Interfaz de Interrupciones}
-
-                    Esta interfaz comunica a la capa del kernel con la del hardware.
-
-                    Esta compuesta por un conjunto de interrupciones o servicios de 
-                    interrupción que el sistema operativo pone a dispoción de los
-                    usuarios por medio de un lenguaje de programación de bajo nivel,
-                    por esto se le conoce como una comunicación indirecta.
-
-            \end{itemize}
-
-
-
-    % ===============================================================================
-    % ===========          FUNCIONAMIENTO DE UN PROCESADOR        ===================
-    % ===============================================================================
-    \chapter{Funcionamiento de un Procesador}
-
-        % ==============================================
-        % ===========     PIPELINE          ============
-        % ==============================================
-        \clearpage
-        \section{Pipeline}
-
-            Pipelining es una técnica de implementación donde múltiples instrucciones se superponen en
-            la ejecución.
-
-            La tubería de la computadora se divide en etapas. Cada etapa completa una parte de una instrucción en paralelo. Las etapas se conectan una a la otra para formar un tubo - las instrucciones entran en un extremo, avanzan por las etapas y salen al otro extremo.
-
-            Pipelining no disminuye el tiempo para la ejecución individual de la instrucción.
-            En su lugar, aumenta el rendimiento de la instrucción.
-            El rendimiento de la tubería de instrucciones está determinado por la frecuencia con que una
-            instrucción sale de la tubería.
-
-            Debido a que las etapas del tubo están enganchadas juntas, todas las etapas deben estar listas
-            para proceder al mismo tiempo
-            Llamamos el tiempo requerido para mover una instrucción un paso más en la tubería un ciclo de máquina.
-            La longitud del ciclo de la máquina está determinada por el tiempo requerido para la etapa de tubería
-            más lenta.
-
-            El objetivo del diseñador de la tubería es equilibrar la longitud de cada etapa de la tubería
+                El objetivo del diseñador de la tubería es equilibrar la longitud de cada etapa de la tubería
 
 
 
@@ -632,41 +651,87 @@
 
             \begin{figure}[h!]
                 \centering
-                \includegraphics[width=0.85\textwidth]{PartesDelKernel}
+                \includegraphics[width=0.35\textwidth]{PartesDelKernel}
             \end{figure}
 
 
+
+
+
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+% ///////////////////////////         PROCESOS HILOS Y VIRTUALIZACION           ////////////////////////////
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+\part{Procesos, Hilos y la Virtualización}
+\clearpage
+
+
     % ===============================================================================
-    % ===========               ADMINISTRADOR DE PROCESOS         ===================
+    % ====================              PROCESOS        =============================
     % ===============================================================================
-    \chapter{Administrador de Procesos}
+    \chapter{Procesos}
 
         % ==============================================
-        % ===========    INTRODUCCION       ============
+        % ===========      INTRODUCCIÒN      ===========
         % ==============================================
         \clearpage
-        \section{Introducción a Procesos}
+        \section{Introducción}
 
-            Es uno de los principales administradores del sistema operativo.
-            Este se encarga de la gestión de cualquier trabajo a ejecutar en el sistema.
-            Los trabajos que son ejecutados por este administrador son llamados \textbf{procesos}.
-            Se encarga de llevar a cabo la ejecución de todos los programas del sistema operativo.
+            % ==============================================
+            % ===========       PROCESOS        ============
+            % ==============================================
+            \clearpage
+            \subsection{Conozcamos a los Procesos}
+
+                El Administrador de los Procesos se encarga de la gestión de cualquier trabajo
+                a ejecutar en el sistema.
+
+                La clave durante este capitulo será la virtualización, la virtualización es
+                la tecnica que haremos para hacerle creer a cada \Quote{programa} que se este
+                ejecutando que es el único en ejecucción y tiene siempre acceso a la CPU.
 
 
-            \begin{ColorText}{IndigoMD}
-                {\Quote{Un proceso es un programa en ejecución}}
+                Haremos esto porqe basicamente tenemos una pequeña cantidad de procesadores y 
+                muchisimos programas intentando ejecutarse al mismo tiempo.
 
-                \Quote{Un proceso es la entidad mínima de software ejecutándose en el Sistema
-                Operativo contenido en una estructura de infromación}
+                Ahí esta la clave del problema... ¿Cómo podemos crear la ilusión de tener
+                muchísimas CPU's?
 
-            \end{ColorText}
+                Vamos a introducir una de las abstracciones más fundamentales que nos da el 
+                sistema operativo: Los Procesos.
 
-            De esta definición podemos obtener dos caracteristicas muy importantes:
-            \begin{itemize}
-                
-                \item Es una Entidad de Software
+                El Sistema Operativo logra crear esta ilusión de una gran cantidad de procesadores
+                gracias a la virtualización de la CPU, es decir, gracias a estar corriendo un proceso
+                y luego parandolo para correr el siguiente, esta tecnica es conocida como \textbf{
+                tiempo compartido}.
 
-                    \begin{SmallIndentation}[1em]
+                Pata implementar la virtualización y para implementarla bien veremos sobre algunas
+                de los mecanismos a bajo nivel como \textbf{el cambio de contexto} o técnicas de 
+                alto nivel como \textbf{las políticas de planificación}.
+
+            % ==============================================
+            % ===========       PROCESOS        ============
+            % ==============================================
+            \clearpage
+            \subsection{Definición de un Proceso}
+
+                Aquí entre amigos podemos definir a un proceso como un programa en ejecución,
+                así de simple.
+
+                Podemos diferenciar un programa en ejecución de otro por el PC, es decir, 
+                por cuales instrucciones se estan ejecutando, por el valor actual de los registros,
+                la pila de punteros o cosas así, así que si vamos a asbtraer / generalizar un proceso
+                tendremos que tener una forma de almacenar dicha información que identifica a nuestros
+                programas.
+
+                Formalmente podemos decir que:
+                \Quote{Un proceso es un programa en ejecución, es la entidad mínima de software
+                ejecutándose en el sistema operativo contenido en una estructura de información}
+
+                De esta definición podemos obtener dos características muy importantes:
+                \begin{itemize}
+                    
+                    \item \textbf{Es una Entidad de Software}
+
                         Esto implica que tendrá asociado un ciclo de vida. Este ciclo representará
                         las diverdad etapas por las cuales puede transitar un proceso.
 
@@ -683,11 +748,9 @@
                         Este PCB es el elemento con el que el Administrador de Procesos
                         interacturá durante el ciclo de vida del proceso presente en el sistema 
                         operativo.
-                    \end{SmallIndentation}
 
-                \item Representa una estructura de información
+                    \item \textbf{Representa una Estructura de Información}
 
-                    \begin{SmallIndentation}[1em]
                         Un proceso se implementa a traves de una estructura de información, la cual contendra
                         toda la información necesaria para caracterizar completamente cual proceso representado
 
@@ -696,9 +759,169 @@
                         Este bloque es un elemento principal ya que el administrador de procesos va a estar
                         en contacto con el durante el ciclo de vida del procesos.
                     
-                    \end{SmallIndentation}
-                        
-            \end{itemize}
+                \end{itemize}
+
+
+
+        % ==============================================
+        % ===========      PROCESOS         ============
+        % ==============================================
+        \clearpage
+        \section{La API de los Procesos}
+
+            % ==============================================
+            % ===========         VISTA GENERAL     ========
+            % ==============================================
+            \subsection{Vista General}
+
+                Veremos pronto una visión particular de cada llamada el sistema, pero 
+                antes te mostraré que es lo que debería venir incluido en cada interfaz
+                con el sistema operativo para manejar procesos.
+
+                \begin{itemize}
+                    \item
+                        \textbf{Crear Procesos:}
+                        Cualquier sistemas operativo debe tener una 
+                        forma de crear un proceso, esto sería la llamada usada
+                        cuando ejecutas un comando o cuando das doble click en el icono
+                        de una app.
+
+                        Generalmente un sistema operativo te dará varias maneras en 
+                        las cuales puedes crear un nuevo proceso, pero en todas lo
+                        que ocurre tras banbalinas es basicamente lo mismo:
+
+                        El proceso es código-instrucciones que se cargan a memoria,
+                        se le va a reservar algo de memoria conocida como el stack 
+                        (esa memoria que se usa para las variables locales, los 
+                        parametros de una función ó los valores de retorno), seguramente
+                        también se encargará de llenar los tan famosos $argc, argv$,
+                        también reservará espacio para el heap, este es usado
+                        para alocar memoria dinamicamente, como al llamar al $malloc()$,
+                        también se encargará seguramente de abrir 3 archivos, uno para
+                        errores y una entrada y salida estandar. Finalmente ahora si
+                        coloca el apuntador a la instrucción actual al inicio de $main()$
+                        por lo que el proceso-programa ahora tiene el control de la CPU.
+
+                    \item
+                        \textbf{Destruir Procesos:}
+                        Cualquier sistemas operativo debe tener una 
+                        forma de matar un proceso, esto sería la llamada usada
+                        cuando nuestro pequeño procesos hace algo que no debe como
+                        tomar memoria que no es suya o cuando un proceso bonito finalizo
+                        sin mas problemas.
+
+                    \item
+                        \textbf{Esperar Procesos:}
+                        Muchas veces será útil tener una forma de tomar un proceso
+                        en ejecución y pasarlo a un estado de \Quote{idle} en el
+                        que podemos poner en ejecución otro proceso.
+
+                    \item
+                        \textbf{Información del Procesos:}
+                        Muchas veces será útil tener una forma de saber la información
+                        personal de cada proceso, cuanto tiempo ha usado al CPU, cual
+                        es el ID de su proceso padre o en que estado esta actualmente.
+                 \end{itemize} 
+
+
+            % ==============================================
+            % ===========         VISTA GENERAL     ========
+            % ==============================================
+            \clearpage
+            \subsection{Crear Procesos con $fork()$}
+
+                Es bastante obvio que $fork()$ nos permitirá crear procesos,
+                pero creeme si te digo que es la llamada a sistema más rara que has visto
+                nunca.
+
+                Antes que nada, es importante recordar que para el sistema operativo
+                todo proceso tiene un ID, ó PID, este se obtiene muy fácil con $getpid()$
+
+                Lo que hará esta llamada al sistema es crear un nuevo proceso, completamente
+                nuevo, pero a imagen y semejanza del proceso actual, un proceso hijo
+                si lo quieres ver así. Todo será igual, excepto algo:
+
+                \begin{itemize}
+                    \item El proceso padre obtendrá el PID del proceso hijo como valor
+                        de retorno del $fork()$
+                    \item El proceso hijo obtendrá un 0 como valor de retorno del
+                    $fork()$, además de ser la línea de código siguiente desde la cual
+                    va a empezar a correr.
+                \end{itemize}
+
+                Y si somos extrictos, si algo fallará entonces $fork()$ nos regresa
+                un lindo valor negativo.
+
+                Ahora otra cosa que ver es que ahora, nuestro resultado no será deterministico
+                porque no sabemos que se ejecutará primero, si el proceso padre o el hijo, 
+                ni cuanto tiempo parasá entre la ejecución de uno y de otro.
+
+                % ========================================
+                % ===========        CODE         ========
+                % ========================================
+                \subsubsection{Ejemplo}
+                    \begin{lstlisting}[language=C, gobble=24]
+                        /*=======================================================================
+                        =================       FORK SYSTEM CALL    =============================
+                        =========================================================================
+                            USE: $ C99 Fork.c && reset && ./a.out
+                        */
+
+                        #include <stdio.h>                                                  //We will need this
+                        #include <stdlib.h>                                                 //We will need this        
+                        #include <unistd.h>                                                 //We will need this        
+                        #include "SuperSimpleErrorHandling.c"                               //My simple code :p
+
+
+                        // ==========================================
+                        // ======      MAIN FUNCTION       ==========
+                        // ==========================================
+                        int main(int argc, char *argv[]) {                                  //This is fucking main
+                            printf("Hello World \t\t(PID %i)\n", getpid());                 //Show me your ID
+                            
+                            int ChildID = fork();                                           //Now create a new process
+                            if (ChildID < 0) return ShowError("Error at Fork", 1);          //Go an show it
+
+                            if (ChildID == 0)                                               //YOU ARE THE CHILD?
+                                printf("I am Child \t\t(PID %i)\n", getpid());              //Show me your ID then kid
+                            else                                                            //YOU ARE THE PARENT
+                                printf("I'm Parent of %d \t(PID %i)\n", ChildID, getpid()); //Show me your ID then old man
+
+                            return 0;
+                        }
+                    \end{lstlisting}
+
+
+
+
+                    
+                
+
+            % ==============================================
+            % ===========    SUSTITUCON DE CODIGO   ========
+            % ==============================================
+            \clearpage
+            \subsection{Sustitución de Código}
+
+                La creación de procesos por sustitución de código es la forma mas común de crear
+                nuevos procesos, todos los sistemas operativos cuentan con esta opción y tiene 
+                dos características muy importantes:
+                \begin{itemize}
+                    \item El nuevo proceso sustituye y destruye al proceso padre
+                    \item La memoria utilizada por el proceso creador es reutilizada por el nuevo
+                    proceso
+                \end{itemize}
+
+                Los sistemas operativos ofrecen alternativas para que le nuevo proceso no destruya
+                al proceso padre, permitiendo que esta practica sea útil en la vida real.
+
+                Por ejemplo UNIX y GNU/Linux combinan tanto la creación por copia de codigo como por
+                sustitución paa permitir que tanto el proceso creador como el nuevo proceso esten 
+                en ejecucción concurrente.
+
+                Por otra parte Windows asocia un hilo a cada proceso que ejecuta y este hilo se ejecuta por
+                sustitución de codigo, conservando al proceso padre.
+
 
 
 
@@ -747,7 +970,7 @@
                 \item
                     \textbf{Información de Planificación:}
 
-                        Estos datos mantienen informaciòn relacionada a la forma en que un proceso será
+                        Estos datos mantienen información relacionada a la forma en que un proceso será
                         planificado, entre esta informaciòn se encuentra la siguiente: 
 
                             \begin{itemize}
@@ -755,26 +978,18 @@
                                 \item Prioridad del proceso (en caso de ser utilizada)
                             \end{itemize}
 
+                \clearpage
+
                 \item
                     \textbf{Información de Memoria:}
 
-                        Estos datos mantienen informacion relacionada con la administración de memoria
+                        Estos datos mantienen información relacionada con la administración de memoria
                         usada para la ejecuciòn del progceso, esta información incluye lo siguiente:
 
                         \begin{itemize}
                             \item Páginas o segmentos usasdos por el proceso
                             \item Tabla de pàginas o segmentos utilizados por el proceso 
                         \end{itemize}
-                
-                \item
-                    \textbf{Información Memoria:}
-
-                        Estos datos mantienen informacion relacionada con la administración de memoria
-                        usada para la ejecución del progceso, esta informaciòn incluye lo siguiente: 
-                            \begin{itemize}
-                                \item Páginas o segmentos usasdos por el proceso
-                                \item Tabla de páginas o segmentos utilizados por el proceso 
-                            \end{itemize}
                 
                 \item
                     \textbf{Información de Contable:}
@@ -836,7 +1051,7 @@
             Cualquier referencia se lleva acabo a través de este indentificador.
 
             Dentro de este Árbol se establece una relación Hijo-Padre entre los procesos, esta relación 
-            permite heredar caracteristicas de un proceso padre a sus hijos, además nos permite mantener
+            permite heredar características de un proceso padre a sus hijos, además nos permite mantener
             una organización centralizada.
 
             Esto nos dice que no existen procesos aislados, todo proceso tiene que estar contenido en el
@@ -844,74 +1059,49 @@
 
 
 
-        % ==============================================
-        % ===========    PROCESOS EN C      ============
-        % ==============================================
-        \clearpage
-        \section{Procesos en C}
+
+
+        % ==================================
+        % ===========    HILOS      ========
+        % ==================================
+        \section{Hilos}
+
+            Son procesos ligeros, es una alternativa a las aplicaciones concurrentes.
+
+            Un hilo es un componente de un proceso tradicional que se ejecuta en concurrencia con
+            sus proceso creador.
+
+            Para el sistema operativo es más facil crear hilos que crear un proceso tradicional, por eso se
+            le llaman procesos ligeros.
+
+            \begin{itemize}
+                \item Comparten valores de los recursos asignados a su proceso creador,
+                    siendo la memoria el principal recurso compartido
+
+                \item Manejan de manera independiente tanto al apila como el contador de programa
+                
+                \item Dependen de la ejecución de su proceso padre
+
+            \end{itemize}
+
+            Los sistemas operativos implementan sus hilos a traves de dos posibles métodos:
+            \begin{itemize}
+
+                \item Por una biblioteca a nivel usuario:
+                    Esta forma es más portable, pues basta con que el sistema computacional soporte 
+                    la libreria para que la app funcione como si nada, pero por la capa extra que le ponemos
+                    suelen ser más lentas
+
+                \item Por llamadas al sistema mediante Kernel:
+                    Es lo inverso, perdemos portabilidad, pero por otro lado ganamos velocidad
+
+            \end{itemize}
 
 
 
-            % ==============================================
-            % ===========    SUSTITUCON DE CODIGO   ========
-            % ==============================================
-            \subsection{Sustitución de Código}
-
-                La creación de procesos por sustitución de código es la forma mas común de crear
-                nuevos procesos, todos los sistemas operativos cuentan con esta opción y tiene 
-                dos caracteristicas muy importantes:
-                \begin{itemize}
-                    \item El nuevo proceso sustituye y destruye al proceso padre
-                    \item La memoria utilizada por el proceso creador es reutilizada por el nuevo
-                    proceso
-                \end{itemize}
-
-                Los sistemas operativos ofrecen alternativas para que le nuevo proceso no destruya
-                al proceso padre, permitiendo que esta practica sea útil en la vida real.
-
-                Por ejemplo UNIX y GNU/Linux combinan tanto la creación por copia de codigo como por
-                sustitución paa permitir que tanto el proceso creador como el nuevo proceso esten 
-                en ejecucción concurrente.
-
-                Por otra parte Windows asocia un hilo a cada proceso que ejecuta y este hilo se ejecuta por
-                sustitución de codigo, conservando al proceso padre.
 
 
-                % ==================================
-                % ===========    HILOS      ========
-                % ==================================
-                \subsubsection{Hilos}
 
-                    Son procesos ligeros, es una alternativa a las aplicaciones concurrentes.
-
-                    Un hilo es un componente de un proceso tradicional que se ejecuta en concurrencia con
-                    sus proceso creador.
-
-                    Para el sistema operativo es más facil crear hilos que crear un proceso tradicional, por eso se
-                    le llaman procesos ligeros.
-
-                    \begin{itemize}
-                        \item Comparten valores de los recursos asignados a su proceso creador,
-                            siendo la memoria el principal recurso compartido
-
-                        \item Manejan de manera independiente tanto al apila como el contador de programa
-                        
-                        \item Dependen de la ejecución de su proceso padre
-
-                    \end{itemize}
-
-                    Los sistemas operativos implementan sus hilos a traves de dos posibles métodos:
-                    \begin{itemize}
-
-                        \item Por una biblioteca a nivel usuario:
-                            Esta forma es más portable, pues basta con que el sistema computacional soporte 
-                            la libreria para que la app funcione como si nada, pero por la capa extra que le ponemos
-                            suelen ser más lentas
-
-                        \item Por llamadas al sistema mediante Kernel:
-                            Es lo inverso, perdemos portabilidad, pero por otro lado ganamos velocidad
-
-                    \end{itemize}
 
 
         % ==============================================
