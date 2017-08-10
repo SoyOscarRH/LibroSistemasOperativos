@@ -1,0 +1,5 @@
+\select@language {spanish}
+\contentsline {part}{I\hspace {1em}Parte Abstracta}{2}{part.1}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}\IeC {\textquestiondown }Qu\IeC {\'e} es un Sistema Operativo?}{4}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Definici\IeC {\'o}n Formal}{4}{subsection.1.1.1}
