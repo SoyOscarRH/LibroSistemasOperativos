@@ -346,6 +346,129 @@
 
 
 
+    % ===============================================================================
+    % ===========          PARTES DEL SISTEMA OPERATIVO           ===================
+    % ===============================================================================
+    \chapter{Partes del Sistema Operativo}
+
+        % ==============================================
+        % =============    VISTA GENERAL    ============
+        % ==============================================
+        \clearpage
+        \section{Vista General}
+
+            Un Sistema Operativo como cualquier otro software sigue un modelo de ingeniería de
+            software para su diseño y construcción, en modelo que se usa es el denominado por capas,
+            este modelo nos dice que cada capa se encarga de realizar una funcionalidad concreta
+            dentro del sistema operativo.
+
+            Un sistema operativo normalmente está integrado por las siguientes capas:
+            \begin{itemize}
+                \item Hardware
+                \item Kernel
+                \item Servicios        
+                \item Aplicaciones
+            \end{itemize}  
+
+            Estas capas para llevar a cabo sus funciones requieren comunicarse con cada adyacentes,
+            para lograr esta comunicación se usan las interfaces,
+            estas son:
+            \begin{itemize}
+                \item Interfaz de Comandos
+                \item Interfaz de Llamafas al Sistema
+                \item Interfaz de Interrupciones        
+            \end{itemize}  
+
+
+            Graficamente las podemos ver como:
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=0.55\textwidth]{Capas}
+            \end{figure}
+
+        % ==============================================
+        % =============        CAPAS        ============
+        % ==============================================
+        \clearpage
+        \section{Capas}    
+
+            \begin{itemize}
+                \item
+                    \textbf{Capa de Aplicaciones}
+
+                    Esta capa se encarga de mantener cualquier aplicación que el usuario ejecutará
+                    en el sistema operativo, siendo la capa con la que el usuario tendrá contacto.
+
+                    Se encarga de mantener todas las aplicaciones que tu conoces normalmente.
+
+
+                \item
+                    \textbf{Capa de Servicios}
+
+                    Esta capa se encarga de mantener los servicio que apoyan el funcionamiento
+                    del sistema operativo, teniendo servicios de seguridad, de mantenimiento,
+                    entre otras.
+
+                    A veces se suele unir y dividir sus funciones entre la capa de aplicaciones
+                    y el kernel.
+
+
+                \item
+                    \textbf{Capa de Kernel o Núcleo}
+
+                    Esta es la capa principal del sistema operativo, esta mantiene a los 5
+                    administradores que componen a todo sistema operativo.
+
+
+                \item
+                    \textbf{Capa de Hardware}
+
+                    Esta es la capa mas baja del sistema, se encarga de mantener todas las interfaces
+                    de comunicación con el hardware.
+
+            \end{itemize}
+
+
+        % ==============================================
+        % =========       INTERFACES        ============
+        % ==============================================
+        \clearpage
+        \section{Interfaces}    
+            
+            \begin{itemize}
+                \item
+                    \textbf{Interfaz de Comandos}
+
+                    Esta interfaz comunica a la capa de aplicaciones con la de
+                    servicios o a la capa del kernel.
+
+                    Esta compuesta de por todos los comandos disponibles en el sistema
+                    operativo, siendo la interfaz de interacción inmediata que el usuario
+                    posee para comunicarse con el sistema operativo.
+
+                \item
+                    \textbf{Interfaz de Llamadas al Sistema}
+
+                    Esta interfaz comunica a la capa de servicios con la de
+                    aplicaciones o a la capa del kernel.
+
+                    Esta compuesta por unas APIs (es decir funciones o métodos)
+                    que el sistema operativo pone a dispoción de los usuarios a
+                    través de un lenguaje de alto nivel, por esto se le conoce como una
+                    comunicación indirecta.
+
+                \item
+                    \textbf{Interfaz de Interrupciones}
+
+                    Esta interfaz comunica a la capa del kernel con la del hardware.
+
+                    Esta compuesta por un conjunto de interrupciones o servicios de 
+                    interrupción que el sistema operativo pone a dispoción de los
+                    usuarios por medio de un lenguaje de programación de bajo nivel,
+                    por esto se le conoce como una comunicación indirecta.
+
+            \end{itemize}
 
 
 \end{document}
