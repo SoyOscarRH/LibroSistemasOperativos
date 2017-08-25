@@ -471,6 +471,78 @@
             \end{itemize}
 
 
+
+
+
+    % ===============================================================================
+    % ===========         KERNEL DE UN SISTEMA OPERATIVO          ===================
+    % ===============================================================================
+    \chapter{Kernel de un Sistema Operativo}
+
+        % ==============================================
+        % ===========    ADMINISTRADORES    ============
+        % ==============================================
+        \clearpage
+        \section{Conozcamos a los Administradores}
+
+            Podemos separar el Kernel en varios administradores, todos interactuan entre si
+            para realizar correctamente su trabajo.
+
+            \begin{itemize}
+                \item
+                    \textbf{Administrador de Procesos:}
+
+                    Se encarga de la ejecución de cualquier trabajo en el Sistema, esta
+                    compuesto por un conjunto de algoritmos de planificación y de estructuras
+                    de datos.
+
+                    El hardware con el cual interactua este administrador es el procesador
+                    del equipo de cómputo.
+
+                \item
+                    \textbf{Administrador de Memoria:}
+
+                    Este administrador se encarga de la gestión tanto de la memoria física como
+                    de la memoria virtual.
+
+                    Esta compuesto por un esquema global de gestión de memoria, así como el
+                    conjunto de algoritmos para el control de la memoria.
+
+
+                \item
+                    \textbf{Administrador de Entrada y Salida:}
+
+                    Este administrador se encarga de la gestión de acceder a cualquier dispositivo
+                    externo.
+                    Esta compuesto por un conjunto de interfaces de conectividad y controladores
+                    de nivel de hardware como software.
+
+
+                \item
+                    \textbf{Administrador de Archivos:}
+
+                    Este administrador se encarga de la gestión de todos los archivos del
+                    sistema operativo.
+                    Se encarga de la organización lógica de la información.
+
+                 \item
+                    \textbf{Administrador de Red:}
+
+                    Este administrador se encarga de cualquier comunicación en red del sistema
+                    operativo, esta compuesto por un modelo de comunicación en red y diversos
+                    protocolos asociados al modelo usado.
+
+            \end{itemize}
+
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=0.85\textwidth]{PartesDelKernel}
+            \end{figure}
+
+
+
+
 \end{document}
 
 
