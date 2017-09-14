@@ -29,6 +29,7 @@
     % *********   GRAPHICS AND IMAGES *********
     \usepackage{graphicx}                                           %Allow to create graphics
     \usepackage{wrapfig}                                            %Allow to create images
+    \usepackage{xcolor}                                             %Allow to create images
     \graphicspath{ {Graphics/} }                                    %Where are the images :D
 
     % *********   LISTS AND TABLES ***********
@@ -87,7 +88,17 @@
     \newenvironment{SmallIndentation}[1][0.75em]                    %Use: The same that we upper one, just 
     {\begin{adjustwidth}{#1}{}\begin{footnotesize}}                 %footnotesize size of letter by default
     {\end{footnotesize}\end{adjustwidth}}                           %that's it
-        
+
+
+    % =====  GENERAL COLOR  =========
+    \definecolor{IndigoMD}{HTML}{3F51B5}                            %Use: Color :D
+    \definecolor{DeepPurpleMD}{HTML}{673AB7}                        %Use: Color :D
+    \definecolor{TealMD}{HTML}{009688}                              %Use: Color :D
+
+    \newenvironment{ColorText}[1]{                                  %Use: \begin{ColorText}
+        \leavevmode\color{#1}\ignorespaces}                         %That's is!
+
+            
     % =====  GENERAL MATH  ==========
     \DeclareMathOperator \Space {\quad}                             %Use: \Space for a cool mega space
     \DeclareMathOperator \MiniSpace {\;}                            %Use: \Space for a cool mini space
@@ -174,6 +185,13 @@
 
 
 
+
+
+
+
+
+
+
 % =====================================================
 % ============     	  COVER PAGE	   ================
 % =====================================================
@@ -216,9 +234,9 @@
 
 
 % //////////////////////////////////////////////////////////////////////////////////////////////////////////
-% ///////////////////////////////////         SISTEMAS DE COORDENADAS      /////////////////////////////////
+% ///////////////////////////////////              INTRODUCCION            /////////////////////////////////
 % //////////////////////////////////////////////////////////////////////////////////////////////////////////
-\part{Parte Abstracta}
+\part{Una Introducción}
 \clearpage
 
 
@@ -540,6 +558,67 @@
                 \includegraphics[width=0.85\textwidth]{PartesDelKernel}
             \end{figure}
 
+
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+% ///////////////////////////////////           ADMINISTRATIVO             /////////////////////////////////
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+\part{Administradores}
+\clearpage
+
+
+
+    % ===============================================================================
+    % ===========               ADMINISTRADOR DE PROCESOS         ===================
+    % ===============================================================================
+    \chapter{Administrador de Procesos}
+
+        % ==============================================
+        % ===========    ADMINISTRADORES    ============
+        % ==============================================
+        \clearpage
+        \section{Introducción}
+
+            Es uno de los principales administradores del sistema operativo.
+            Este se encarga de la gestión de cualquier trabajo a ejecutar en el sistema.
+            Los trabajos que son ejecutados por este administrador son llamados \textbf{procesos}.
+            Se encarga de llevar a cabo la ejecución de todos los programas del sistema operativo.
+
+            \subsection{Procesos}
+
+                \begin{ColorText}{IndigoMD}
+                    {\Quote{Un proceso es un programa en ejecución}}
+
+                    \Quote{Un proceso es la entidad mínima de software ejecutándose en el Sistema
+                    Operativo contenido en una estructura de infromación}
+
+                \end{ColorText}
+
+                De esta definición podemos obtener dos caracteristicas muy importantes:
+                \begin{itemize}
+                    
+                    \item Es una Entidad de Software
+
+                        \begin{SmallIndentation}
+                            Esto implica que tendrá asociado un ciclo de vida. Este ciclo representará
+                            las diverdad etapas por las cuales puede transitar un proceso.
+
+                            Un proceso en el sistema operativo se implementará a través de una
+                            estructura de información, la cual contendrá toda la información necesaria
+                            para caracterizar a dicho proceso.
+
+                            Esta estructura de información es implementada mediante una
+                            estructura de datos en el lenguaje de alto nivel que estemos utilizando.
+
+                            A esta estructura se le conoce como \textbf{Bloque de Control del Proceso}
+                            (PCB). 
+
+                            Este PCB es el elemento con el que el Administrador de Procesos
+                            interacturá durante el ciclo de vida del proceso presente en el sistema 
+                            operativo.
+                        \end{SmallIndentation}
+
+                    \item Representa una estructura de información
+                \end{itemize}
 
 
 
