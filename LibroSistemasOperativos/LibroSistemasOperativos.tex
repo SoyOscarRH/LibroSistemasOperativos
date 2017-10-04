@@ -193,32 +193,32 @@
 
 
 % =====================================================
-% ============     	  COVER PAGE	   ================
+% ============        COVER PAGE       ================
 % =====================================================
 \begin{document}
 \begin{titlepage}
 
-	\center
-	% ============ UNIVERSITY NAME AND DATA =========
-	\textbf{\textsc{\Large Proyecto Compilando Conocimiento}}\\[1.0cm] 
-	\textsc{\Large Programación}\\[1.0cm] 
+    \center
+    % ============ UNIVERSITY NAME AND DATA =========
+    \textbf{\textsc{\Large Proyecto Compilando Conocimiento}}\\[1.0cm] 
+    \textsc{\Large Programación}\\[1.0cm] 
 
-	% ============ NAME OF THE DOCUMENT  ============
-	\rule{\linewidth}{0.5mm} \\[1.0cm]
-		{ \huge \bfseries Bases de Sistemas Operativos}\\[1.0cm] 
-	\rule{\linewidth}{0.5mm} \\[2.0cm]
-	
-	% ====== SEMI TITLE ==========
-	{\LARGE Una Pequeña (Gran) Introducción}\\[7cm] 
-	
-	% ============  MY INFORMATION  =================
-	\begin{center} \large
+    % ============ NAME OF THE DOCUMENT  ============
+    \rule{\linewidth}{0.5mm} \\[1.0cm]
+        { \huge \bfseries Bases de Sistemas Operativos}\\[1.0cm] 
+    \rule{\linewidth}{0.5mm} \\[2.0cm]
+    
+    % ====== SEMI TITLE ==========
+    {\LARGE Una Pequeña (Gran) Introducción}\\[7cm] 
+    
+    % ============  MY INFORMATION  =================
+    \begin{center} \large
     \textbf{\textsc{Autores:}}\\
         Rosas Hernandez Oscar Andrés \\
         Lopez Manriquez Angel
     \end{center}
 
-	\vfill
+    \vfill
 
 \end{titlepage}
 
@@ -251,16 +251,18 @@
         \clearpage
         \section{¿Qué es un Sistema Operativo?}
             
-            Los sistemas operativos surgen como una solución a la problematica de la administración de un equipo
-            de computo, de forma tal que fuese simplificada.
+            Los sistemas operativos surgen como una solución a la problematica de la 
+            \textbf{ administración de un equipo de computo}, de forma tal que fuese más sencillo
+            trabajar con el y aprovechar al máximo sus recursos.
     
-            "Un sistema operativo es un programa encargado de controlar todos lor recursos de una copmutadora"
+            "Un sistema operativo es un programa encargado de controlar todos lor recursos de
+            una copmutadora"
 
             \subsection{Definición Formal}
 
-                \Quote{Un sistema operativo es un software de base compuesto por un conjunto de administradores
-                encargados de la administracion de cada uno de los recursos de un equipo de coputo de forma
-                rápida y eficiente.}
+                \Quote{Un sistema operativo es un software de base compuesto por un conjunto
+                de administradores encargados de la administracion de cada uno de los recursos
+                de un equipo de coputo de forma rápida y eficiente.}
 
 
                 \subsection*{Características}
@@ -293,7 +295,27 @@
                             cumplir durante su ejecución.
                 
                     \end{itemize}
-                
+       
+
+        % ==============================================
+        % ========    TIPO DE SISTEMAS         =========
+        % ==============================================
+        \section{Tipo de Sistemas}
+
+            Sistemas Genericos:
+            \begin{itemize}
+                \item Por lotes sencillos
+                \item Por lotes multiprogramados
+                \item De tiempo compartido
+            \end{itemize}
+
+            Sistemas Distribuidos:
+            \begin{itemize}
+                \item Distribuidos: En estos los procesadores no comparten el mismo reloj ni memoria, son sistemas
+                    debilmente acomplados
+                \item Paralela: Los procesadores comparten los recursos como la memoria, son sistemas fuertemente
+                    acomplados
+            \end{itemize}     
 
         % ==============================================
         % ========      TERMINOS COMUNES       =========
@@ -305,14 +327,30 @@
                 \item
                     \textbf{Spooling: }
 
-                    Técnica que nos permite disminuir el tiempo en el que la CPU no se encuentra
-                    realizando ningún trabajo, esto se logra utilizando el disco como buffer de
-                    almacenamiento de trabajos.
+                    SPOOL significa \Quote{Simultaneous Peripheral Operation On-Line}.
+
+                    En realidad, lo que sucede aquí es que hay buffer para almacenar los datos,
+                    por lo general el disco.
+
+                    Los dispositivos de entrada / salida no pueden trabajar a la velocidad de una CPU.
+                    Por lo tanto, la salida de la CPU se almacenará en este spool (buffer) y los
+                    dispositivos de entrada / salida pueden tomar la salida de este buffer como y cuando
+                    se requiera de acuerdo a su velocidad.
+
+                    Por lo tanto, la CPU no está vinculada a este dispositivo de entrada / salida y
+                    puede realizar otras operaciones.
+                    Gracias al spooling podemos mantener la CPU y los dispositivos de entrada y salida
+                    trabajando a altas velocidades sin esperar el uno al otro.
+
+                \item
+                    \textbf{Reserva de Trabajo: }
+
+                    Conjunto de trabajos en el disco listos para ser ejecutados por la CPU
 
                 \item
                     \textbf{Planificación de Trabajo: }
 
-                    Es la técnica que se encarga de seleccionar cual será e siguiente trabajo
+                    Es la técnica que se encarga de seleccionar cual será el siguiente trabajo
                     ejecutado en la CPU.
 
                 \item
@@ -326,6 +364,13 @@
 
                     Técnica utilizada para asignar un tiempo de ejecución a cada proceso
                     lo suficientemente corto para conmutar entre ellos.
+
+                    El sistema de tiempo compartido es donde cada proceso se asigna un período de
+                    tiempo determinado y el proceso tiene que terminar su finalización dentro de ese
+                    lapso de tiempo.
+
+                    Si no se logra completar su ejecución, entonces el control de CPU pasa al
+                    próximo proceso.
 
                 \item
                     \textbf{Concurrencia: }
@@ -559,14 +604,6 @@
             \end{figure}
 
 
-% //////////////////////////////////////////////////////////////////////////////////////////////////////////
-% ///////////////////////////////////           ADMINISTRATIVO             /////////////////////////////////
-% //////////////////////////////////////////////////////////////////////////////////////////////////////////
-\part{Administradores}
-\clearpage
-
-
-
     % ===============================================================================
     % ===========               ADMINISTRADOR DE PROCESOS         ===================
     % ===============================================================================
@@ -619,6 +656,37 @@
 
                     \item Representa una estructura de información
                 \end{itemize}
+
+
+    % ===============================================================================
+    % ===========          FUNCIONAMIENTO DE UN PROCESADOR        ===================
+    % ===============================================================================
+    \chapter{Funcionamiento de un Procesador}
+
+        % ==============================================
+        % ===========     PIPELINE          ============
+        % ==============================================
+        \clearpage
+        \section{Pipeline}
+
+            Pipelining es una técnica de implementación donde múltiples instrucciones se superponen en
+            la ejecución.
+
+            La tubería de la computadora se divide en etapas. Cada etapa completa una parte de una instrucción en paralelo. Las etapas se conectan una a la otra para formar un tubo - las instrucciones entran en un extremo, avanzan por las etapas y salen al otro extremo.
+
+            Pipelining no disminuye el tiempo para la ejecución individual de la instrucción.
+            En su lugar, aumenta el rendimiento de la instrucción.
+            El rendimiento de la tubería de instrucciones está determinado por la frecuencia con que una
+            instrucción sale de la tubería.
+
+            Debido a que las etapas del tubo están enganchadas juntas, todas las etapas deben estar listas
+            para proceder al mismo tiempo
+            Llamamos el tiempo requerido para mover una instrucción un paso más en la tubería un ciclo de máquina.
+            La longitud del ciclo de la máquina está determinada por el tiempo requerido para la etapa de tubería
+            más lenta.
+
+            El objetivo del diseñador de la tubería es equilibrar la longitud de cada etapa de la tubería
+
 
 
 
