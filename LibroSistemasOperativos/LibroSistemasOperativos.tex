@@ -830,9 +830,75 @@
             Esto nos dice que no existen procesos aislados, todo proceso tiene que estar contenido en el
             Árbol de Procesos.
 
-             
+        % ==============================================
+        % ===========    PROCESOS EN C      ============
+        % ==============================================
+        \clearpage
+        \section{Procesos en C}
 
-            
+
+
+            % ==============================================
+            % ===========    SUSTITUCON DE CODIGO   ========
+            % ==============================================
+            \subsection{Sustitución de Código}
+
+                La creación de procesos por sustitución de código es la forma mas común de crear
+                nuevos procesos, todos los sistemas operativos cuentan con esta opción y tiene 
+                dos caracteristicas muy importantes:
+                \begin{itemize}
+                    \item El nuevo proceso sustituye y destruye al proceso padre
+                    \item La memoria utilizada por el proceso creador es reutilizada por el nuevo
+                    proceso
+                \end{itemize}
+
+                Los sistemas operativos ofrecen alternativas para que le nuevo proceso no destruya
+                al proceso padre, permitiendo que esta practica sea útil en la vida real.
+
+                Por ejemplo UNIX y GNU/Linux combinan tanto la creación por copia de codigo como por
+                sustitución paa permitir que tanto el proceso creador como el nuevo proceso esten 
+                en ejecucción concurrente.
+
+                Por otra parte Windows asocia un hilo a cada proceso que ejecuta y este hilo se ejecuta por
+                sustitución de codigo, conservando al proceso padre.
+
+
+                % ==================================
+                % ===========    HILOS      ========
+                % ==================================
+                \subsubsection{Hilos}
+
+                    Son procesos ligeros, es una alternativa a las aplicaciones concurrentes.
+
+                    Un hilo es un componente de un proceso tradicional que se ejecuta en concurrencia con
+                    sus proceso creador.
+
+                    Para el sistema operativo es más facil crear hilos que crear un proceso tradicional, por eso se
+                    le llaman procesos ligeros.
+
+                    \begin{itemize}
+                        \item Comparten valores de los recursos asignados a su proceso creador,
+                            siendo la memoria el principal recurso compartido
+
+                        \item Manejan de manera independiente tanto al apila como el contador de programa
+                        
+                        \item Dependen de la ejecución de su proceso padre
+
+                    \end{itemize}
+
+                    Los sistemas operativos implementan sus hilos a traves de dos posibles métodos:
+                    \begin{itemize}
+
+                        \item Por una biblioteca a nivel usuario:
+                            Esta forma es más portable, pues basta con que el sistema computacional soporte 
+                            la libreria para que la app funcione como si nada, pero por la capa extra que le ponemos
+                            suelen ser más lentas
+
+                        \item Por llamadas al sistema mediante Kernel:
+                            Es lo inverso, perdemos portabilidad, pero por otro lado ganamos velocidad
+
+                    \end{itemize}
+
 \end{document}
 
 
