@@ -214,8 +214,9 @@
     % ============  MY INFORMATION  =================
     \begin{center} \large
     \textbf{\textsc{Autores:}}\\
-        Rosas Hernandez Oscar Andrés \\
-        Lopez Manriquez Angel
+        Rosas Hernandez Oscar Andrés    \\
+        Lopez Manriquez Angel           \\
+        Gonzalez Nuñez Daniel Adrian
     \end{center}
 
     \vfill
@@ -665,7 +666,7 @@
                 
                 \item Es una Entidad de Software
 
-                    \begin{SmallIndentation}
+                    \begin{SmallIndentation}[1em]
                         Esto implica que tendrá asociado un ciclo de vida. Este ciclo representará
                         las diverdad etapas por las cuales puede transitar un proceso.
 
@@ -685,6 +686,18 @@
                     \end{SmallIndentation}
 
                 \item Representa una estructura de información
+
+                    \begin{SmallIndentation}[1em]
+                        Un proceso se implementa a traves de una estructura de información, la cual contendra
+                        toda la información necesaria para caracterizar completamente cual proceso representado
+
+                        Esta estructura de informacion es implementada mediante una estructura de datos en un
+                        lenguaje de programacion, y se le conoce como bloque de control de proceso (PCB).
+                        Este bloque es un elemento principal ya que el administrador de procesos va a estar
+                        en contacto con el durante el ciclo de vida del procesos.
+                    
+                    \end{SmallIndentation}
+                        
             \end{itemize}
 
 
@@ -754,7 +767,7 @@
                         \end{itemize}
                 
                 \item
-                    \textbf{Información Contable:}
+                    \textbf{Información Memoria:}
 
                         Estos datos mantienen informacion relacionada con la administración de memoria
                         usada para la ejecución del progceso, esta informaciòn incluye lo siguiente: 
@@ -764,7 +777,7 @@
                             \end{itemize}
                 
                 \item
-                    \textbf{Información de Memoria:}
+                    \textbf{Información de Contable:}
                     
                         Estos datos mantienen información relacionada con diferentes tiempos consmidos por
                         el proceso, entre estos tiempos se encuentran las siguientes: 
@@ -818,7 +831,6 @@
 
             \end{itemize}
 
-
             En el Árbol de Procesos se le asigna un identificador para referenciar a los procesos, este
             identificador es un valor entero positivo único, que se asigna una vez que se crea el proceso.
             Cualquier referencia se lleva acabo a través de este indentificador.
@@ -829,6 +841,8 @@
 
             Esto nos dice que no existen procesos aislados, todo proceso tiene que estar contenido en el
             Árbol de Procesos.
+
+
 
         % ==============================================
         % ===========    PROCESOS EN C      ============
@@ -898,6 +912,197 @@
                             Es lo inverso, perdemos portabilidad, pero por otro lado ganamos velocidad
 
                     \end{itemize}
+
+
+        % ==============================================
+        % ===========    PROCESOS EN C      ============
+        % ==============================================
+        \clearpage
+        \section{Planificación de Procesos}
+
+
+
+            % ==============================================
+            % ===========    SUSTITUCON DE CODIGO   ========
+            % ==============================================
+            \subsection{Tipos de Planificación}
+
+                Consiste en la seleccion de uno o mas procesos presentes en el sistema operativo para asignarles
+                un recurso requerido. Existen 3 tipos:
+
+                \begin{itemize}
+                    \item
+                        \textbf{Planificación a Largo Plazo:}
+
+                        Selecciona procesos del disco duro para colocarlos en la memoria física:
+                        \begin{itemize}
+                            \item Tiene el tiempo de ejecucion mas lento
+                            \item Presente principalmente en los sistemas operativos por lotes
+                        \end{itemize}
+
+                    \item
+                        \textbf{Planificación a Mediano Plazo:}
+
+                        Selecciona procesos del la memoria virtual para colocarlos en la memoria física:
+                        \begin{itemize}
+                            \item Mas rápido que la planeación a largo plazo
+                            \item Presente en sistemas operativos con multiprogramacion y tiempo compartido
+                            \item Estos dos tipos de planificacion definen el grado de multiprogramacion que tiene
+                                un sistema operativo, es decir el grado de multiprogramacion es el número máximo
+                                de procesos que pueden colocarse en la memoria física simúltaneamente
+                        \end{itemize}
+
+                    \item
+                        \textbf{Planificación a Corto Plazo:}
+
+                        Selecciona procesos para colocarlo directamente el la CPU:
+                        \begin{itemize}
+                            \item Mas rápido que todas
+                            \item Presente en sistemas operativos gracias al despachador
+                        \end{itemize}
+
+                \end{itemize}
+
+
+            % ==============================================
+            % ===========       DESPACHADOR         ========
+            % ==============================================
+            \clearpage
+            \subsection{Despachador}
+
+                Elemento del administrador de procesos que lleva a cabo el cambio de contexto de la CPU, 
+                son de tamañno reducido de hasta 256Kb con tiempos de ejecución contado normalmente en
+                nanosegundo.
+
+                Decimos que estamos cambiando de contexto cuando se desaloja el proceso que está en el CPU,
+                previo respaldo del estado actual de ejecución del proceso, y colocar otro proceso en la CPU
+                para iniciar o continuar su ejecución.
+
+                \subsubsection{Características}
+
+                \begin{itemize}
+                    \item Cambia la CPU de modo usuario a modo kernel
+                    \item Respalda el contexto del proceso actual en su PCB respectivo
+                    \item Desaloja el proceso actual
+                    \item Inicia el contexto del proceso a iniciar por medio de su PCB
+                    \item Inicia el PC o IP con las siguientes instrucciones a ejecutar
+                    \item Cambia la CPU de modo kernel a modo usuario
+                \end{itemize}
+
+
+            % ==============================================
+            % ======   ALGORITMO DE PLANIFICACION     ======
+            % ==============================================
+            \clearpage
+            \subsection{Algoritmo de Planificación}
+
+
+                Los algoritmos permiten la selección de un proceso bajo algun criterio de planificación
+                respectivo a la cola, para asi asignarle algun recurso requerido.
+
+                Todos estos algoritmos se aplican a la cola de planificacion, que es donde se agrupa
+                todos los procesos que solicitan el uso de algún recurso.
+
+                \subsubsection{Tipos}
+
+                \begin{itemize}
+                    \item Primero en Llegar Primero en Servirse (FCFS)
+                    \item Primero el Trabajo mas corto (SJF)
+                    \item Algoritmo por Prioridad
+                    \item Algoritmo por Torno Circular (Round Robin)
+                \end{itemize}
+
+
+            % ==============================================
+            % ===========    SUSTITUCON DE CODIGO   ========
+            % ==============================================
+            \subsection{Colas de Múltiplos Niveles}
+
+                Es como se implementan las colas de planificacion en los sistemas operativos, pues estas estan
+                asociada a una subcola, existen dos tipos:
+
+                \begin{itemize}
+                    \item
+                        \textbf{Cola de Múltiples Niveles Simple:}
+
+                        Cada que un proceso se asigna a una subcola bajo ninguna circustancia puede ser cambiada
+                        a otra subcola.
+
+                    \item
+                        \textbf{Cola de Múltiples Niveles Retroalimentada:}
+
+                        Cualquier proceso se asigna a una subcola puede ser cambiada
+                        a otra subcola.
+
+                \end{itemize}
+
+
+                Recuerda que cada subcola puede tener un algoritmo propio, además de tener un algoritmo
+                global que nos permita administrar a cola global.
+
+
+            % ==============================================
+            % =====    COMUNICACION ENTRE PROCESOS  ========
+            % ==============================================
+            \subsection{Comunicación entre Procesos}
+
+                Los procesos desde el punto de vista de la comunicación pueden clasificarse en dos tipos:
+
+                \begin{itemize}
+                    \item \textbf{Procesos Independientes:}
+                        Estos son aquellos que no requieren comunicación con otros procesos para completar
+                        su ejecución.
+
+                    \item \textbf{Procesos Cooperativos:}
+                        Estos necesitan la comunicación para poder completar su ejecución
+
+                        Estos requieren la ayuda del sistema operativo para poder llevar a cabo la comunicación,
+                        esto se hace mediante los procesos conocidos como IPC (Comunicación Inter Procesos).
+                \end{itemize}
+
+            % ==============================================
+            % ===========         IPC       ================
+            % ==============================================
+            \clearpage
+            \subsection{IPC}
+
+                \begin{itemize}
+                    \item \textbf{Tuberías}: Son archivos creados y controlados internamente por el 
+                        sistema operativo, sirven como buffers en los cuales se almacenan los datos
+                        a comunicar. implementan primitivas para la lectura y escritura de datos.
+
+                        A final de cuentas es un archivo que crea el sistema operativo, por lo tanto
+                        podemos usar las llamadas al sistema que usamos para archivos.
+
+                        Los mensajes a comunicar se manejan como mensajes sin formato. Unicamente soportan
+                        comunicación unidireccional con una conectividad uno a uno.
+
+                    \item \textbf{Memoria Compartida}:
+                        Es una región de memoria creada y controlada por el sistema operativo asociada a un
+                        proceso, la región de memoria creada se anexa al espacio de direcciones del proceso
+                        que utilizará la memoria compartida.
+
+                        Se accede a ella mediante un apuntador a esa región. La memoria compartida puede ser
+                        accedida por todos los procesos que lo necesiten.
+
+                        Por su naturaleza necesitamos tener una forma de sincronizar toda la información.
+
+                    \item \textbf{Sockets}:
+                        Son parecidos a la tuberías, sin embargo su implementación se apoya en el administrador
+                        de red.
+
+                        Todos los mensajes tiene un formato estandarizado, ya que se apoyan con el administrador
+                        de red, podemos comunicar procesos de manera local y de manera remota.
+
+                        El administrador de red es el que se encarga de seleccionar el protocolo que se hará entre
+                        los mensajes.
+
+                        Recuerda que el socket es bidireccional.
+
+                        Debido justo a que tienen un protocolo son más lentos que las tuberías.
+                \end{itemize}
+
+
 
 \end{document}
 
