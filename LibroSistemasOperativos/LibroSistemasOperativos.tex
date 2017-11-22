@@ -661,7 +661,7 @@
 % //////////////////////////////////////////////////////////////////////////////////////////////////////////
 % ///////////////////////////         PROCESOS HILOS Y VIRTUALIZACION           ////////////////////////////
 % //////////////////////////////////////////////////////////////////////////////////////////////////////////
-\part{Procesos, Hilos y la Virtualización}
+\part{Procesos y Virtualización de CPU}
 \clearpage
 
 
@@ -761,6 +761,90 @@
                     
                 \end{itemize}
 
+
+
+        % ==============================================
+        % =====  BLOQUE DE CONTROL DE PROCESOS   =======
+        % ==============================================
+        \clearpage
+        \section{Bloque de Control de Proceso (PCB)}
+
+            La imprementación de un proceso en un sistema operativo se lleva a cabo mediante
+            una estructura de datos, esta es conocida como un PCB.
+            Este mantiene toda la información importante de un proceso, esta nos permite 
+            caraterizar un proceso en el sistema operativo.
+
+            Cada sistema implementa estas estructuras de manera diferente, pero en general
+            todas contienen un:
+
+            \begin{itemize}
+                \item
+                    \textbf{Apuntador:}
+
+                    Mantiene un referencia del PCB en la cola de planificación
+
+                \item
+                    \textbf{Identificador:}
+
+                    Es un simple entero positivo que se encarga identificar al proceso
+
+                \item
+                    \textbf{Contador de Programa:}
+
+                    Mantiene el valor del registro del procesador PC ó IP, es decir, la dirección
+                    de la siguiente instrucción a ejecuctar por el proceso
+
+                \item
+                    \textbf{Registros:}
+
+                    Estos datos antienen los valores de los registros del procesador que actualmente
+                    tiene el proceso en ejecuciòn.
+                \item
+                    \textbf{Estado del Proceso:}
+
+                    Este dato mantiene el estado del ciclo de vida actual, en el que se encuentra
+                    la ejecuciòn de un proceso.
+
+                \item
+                    \textbf{Información de Planificación:}
+
+                        Estos datos mantienen información relacionada a la forma en que un proceso será
+                        planificado, entre esta informaciòn se encuentra la siguiente: 
+
+                            \begin{itemize}
+                                \item Algoritmo de planificacion utilizado 
+                                \item Prioridad del proceso (en caso de ser utilizada)
+                            \end{itemize}
+
+                \clearpage
+
+                \item
+                    \textbf{Información de Memoria:}
+
+                        Estos datos mantienen información relacionada con la administración de memoria
+                        usada para la ejecuciòn del progceso, esta información incluye lo siguiente:
+
+                        \begin{itemize}
+                            \item Páginas o segmentos usasdos por el proceso
+                            \item Tabla de pàginas o segmentos utilizados por el proceso 
+                        \end{itemize}
+                
+                \item
+                    \textbf{Información de Contable:}
+                    
+                        Estos datos mantienen información relacionada con diferentes tiempos consmidos por
+                        el proceso, entre estos tiempos se encuentran las siguientes: 
+                        \begin{itemize}
+                            \item Tiempo de accesso a memoria 
+                            \item Tiempo de acceso a dispositivos de entrada y salida.
+                            \item Tiempo de uso de la CPU
+                        \end{itemize}
+
+                \end{itemize}
+
+                El administrador de procesos basa su operación fundamentalmente en la manipulación de los PCB
+                de los procesos actualmente en ejecución en el sistema operativo, siendo su unidad básica funcional.
+        
 
 
         % ==============================================
@@ -892,121 +976,143 @@
                     \end{lstlisting}
 
 
-
-
-                    
-                
-
             % ==============================================
-            % ===========    SUSTITUCON DE CODIGO   ========
+            % ===========         VISTA GENERAL     ========
             % ==============================================
             \clearpage
-            \subsection{Sustitución de Código}
+            \subsection{Esperar a Procesos Hijos con $wait()$ y $waitpid()$}
 
-                La creación de procesos por sustitución de código es la forma mas común de crear
-                nuevos procesos, todos los sistemas operativos cuentan con esta opción y tiene 
-                dos características muy importantes:
+                Ya que hemos creado varios procesos nos vemos en un problema algo grave:
+                Ya que el orden en el que se ejecutan dichos procesos no depende de 
+                nosotros sino de los algoritmos de planeación sobre la CPU no podemos
+                asegurar en ningun momento si el código que estamos escribiendo sobre
+                un proceso se estará ejecutando antes o después de que terminan sus 
+                procesos hijos.
+
+                Si quisieramos asegurarnos de esto entonces tenemos dos llamadas al
+                sistema muy muy interesantes:
+
                 \begin{itemize}
-                    \item El nuevo proceso sustituye y destruye al proceso padre
-                    \item La memoria utilizada por el proceso creador es reutilizada por el nuevo
-                    proceso
+                    \item $wait()$: Espera a todos los procesos hijos
+                    \item $waitpid(ChildXPID)$: Espera a proceso con
+                        el PID que le pasemos
                 \end{itemize}
 
-                Los sistemas operativos ofrecen alternativas para que le nuevo proceso no destruya
-                al proceso padre, permitiendo que esta practica sea útil en la vida real.
 
-                Por ejemplo UNIX y GNU/Linux combinan tanto la creación por copia de codigo como por
-                sustitución paa permitir que tanto el proceso creador como el nuevo proceso esten 
-                en ejecucción concurrente.
+            % ==============================================
+            % ===========         VISTA GENERAL     ========
+            % ==============================================
+            \clearpage
+            \subsection{Crear Procesos son $exec()$}
 
-                Por otra parte Windows asocia un hilo a cada proceso que ejecuta y este hilo se ejecuta por
-                sustitución de codigo, conservando al proceso padre.
+                Ya vimos $fork()$ que era la manera más rara de crear procesos
+                pues nos permitia crear varias \Quote{copias} del mismo programa
+                en diferentes procesos.
 
+                Pero no siempre queremos eso, a veces querremos crear un proceso
+                con un programa completamente diferente. 
 
+                % ========================================
+                % ===========        VERSIONES    ========
+                % ========================================
+                \subsection{¿Porque hay tantas Llamadas al sistema del estilo $exec*()$}
 
+                    Ok, ok, antes de avanzar mas adelante tengo que contarte algo que
+                    a mi me tiene muy sorprendido es la gran cantidad de llamadas
+                    al sistema que hay con este estilo, son 5:
+                    $execl()$, $execle()$, $execlp()$, $execv()$, $execvp()$.
 
-        % ==============================================
-        % =====  BLOQUE DE CONTROL DE PROCESOS   =======
-        % ==============================================
-        \clearpage
-        \section{Bloque de Control de Proceso (PCB)}
+                    Ahora empecemos, con porque tienen esos nombres tan raros:
 
-            La imprementación de un proceso en un sistema operativo se lleva a cabo mediante
-            una estructura de datos, esta es conocida como un PCB.
-            Este mantiene toda la información importante de un proceso, esta nos permite 
-            caraterizar un proceso en el sistema operativo.
-
-            Cada sistema implementa estas estructuras de manera diferente, pero en general
-            todas contienen un:
-
-            \begin{itemize}
-                \item
-                    \textbf{Apuntador:}
-
-                    Mantiene un referencia del PCB en la cola de planificación
-
-                \item
-                    \textbf{Identificador:}
-
-                    Es un simple entero positivo que se encarga identificar al proceso
-
-                \item
-                    \textbf{Contador de Programa:}
-
-                    Mantiene el valor del registro del procesador PC ó IP, es decir, la dirección
-                    de la siguiente instrucción a ejecuctar por el proceso
-
-                \item
-                    \textbf{Registros:}
-
-                    Estos datos antienen los valores de los registros del procesador que actualmente
-                    tiene el proceso en ejecuciòn.
-                \item
-                    \textbf{Estado del Proceso:}
-
-                    Este dato mantiene el estado del ciclo de vida actual, en el que se encuentra
-                    la ejecuciòn de un proceso.
-
-                \item
-                    \textbf{Información de Planificación:}
-
-                        Estos datos mantienen información relacionada a la forma en que un proceso será
-                        planificado, entre esta informaciòn se encuentra la siguiente: 
+                    \begin{itemize}
+                        \item \textbf{L vs V}:
+                            Define la cantidad de parametros que quieres pasarle al
+                            nuevo proceso.
 
                             \begin{itemize}
-                                \item Algoritmo de planificacion utilizado 
-                                \item Prioridad del proceso (en caso de ser utilizada)
+                                \item \textbf{L} si es que solo te interesa pasar uno
+                                como en $execl(), execle(), execlp()$
+
+                                \item \textbf{V} si es que solo te interesa pasar es
+                                un arreglo de char* como en $execv(), execvp()$
                             \end{itemize}
 
+                            El formato por array es muy util cuando el número
+                            de parametros que vas a enviar al proceso es variable.
+
+
+                        \item \textbf{E}:
+                            Las versiones con una e al final le permiten, además,
+                            pasar un array de char* que son un conjunto de cadenas añadidas al entorno de procesos generado antes de que se inicie el programa ejecutado.
+
+                            En realidad es otra forma de pasar parámetros.
+
+                        \item \textbf{P}:
+                            Las versiones que NO la llevan requieren un path absoluto
+                            o relativo hacia donde esta el ejecutable si es que no
+                            esta en el directorio de trabajo.
+
+                    \end{itemize}
+
+                % ==============================================
+                % ===========    SUSTITUCON DE CODIGO   ========
+                % ==============================================
+                \subsection{Sustitución de Código}
+
+                    Decimos que $exec()$ crea procesos mediante la sustitución de código, es decir:
+                    \begin{itemize}
+                        \item El nuevo proceso sustituye y destruye al proceso padre
+                        \item La memoria utilizada por el proceso creador es reutilizada por el nuevo
+                        proceso
+                    \end{itemize}
+
+                % ========================================
+                % ===========        CODE         ========
+                % ========================================
                 \clearpage
+                \subsubsection{Ejemplo}
+                    \begin{lstlisting}[language=C, gobble=24]
+                        /*=======================================================================
+                        =================       EXEC SYSTEM CALL    =============================
+                        =========================================================================
+                            USE: $ C99 Exec.c && reset && ./a.out
+                        */
 
-                \item
-                    \textbf{Información de Memoria:}
+                        #include <stdio.h>                                                  //We will need this
+                        #include <stdlib.h>                                                 //We will need this        
+                        #include <sys/wait.h>                                               //We will need this  
+                        #include <unistd.h>                                                 //We will need this        
+                        #include <string.h>                                                 //We will need this        
+                        #include "SuperSimpleErrorHandling.c"                               //My simple code :p
 
-                        Estos datos mantienen información relacionada con la administración de memoria
-                        usada para la ejecuciòn del progceso, esta información incluye lo siguiente:
+                        int main(int argc, char *argv[]) {                                  //Fucking main
+                            printf("Hello World \t\t\t(PID %i)\n", getpid());               //Show me your ID
 
-                        \begin{itemize}
-                            \item Páginas o segmentos usasdos por el proceso
-                            \item Tabla de pàginas o segmentos utilizados por el proceso 
-                        \end{itemize}
-                
-                \item
-                    \textbf{Información de Contable:}
-                    
-                        Estos datos mantienen información relacionada con diferentes tiempos consmidos por
-                        el proceso, entre estos tiempos se encuentran las siguientes: 
-                        \begin{itemize}
-                            \item Tiempo de accesso a memoria 
-                            \item Tiempo de acceso a dispositivos de entrada y salida.
-                            \item Tiempo de uso de la CPU
-                        \end{itemize}
+                            int ChildID = fork();                                           //Now create a new process
+                            if (ChildID < 0) ShowErrorAndGo("Error at Fork", 1);            //Go an show it
 
-                \end{itemize}
+                            if (ChildID == 0) {                                             // === YOU ARE THE CHILD =====
+                                printf("I am Child \t\t\t(PID %i)\n", getpid());            //Show me your ID then kid
 
-                El administrador de procesos basa su operación fundamentalmente en la manipulación de los PCB
-                de los procesos actualmente en ejecución en el sistema operativo, siendo su unidad básica funcional.
-        
+                                char *Arguments[3];                                         //Create an array of strings :D
+                                Arguments[0] = strdup("wc");                                //New program: "wc" (word count)
+                                Arguments[1] = strdup("Exec.c");                            //Argument to wc: file to count
+                                Arguments[2] = NULL;                                        //End of array
+                                execvp(Arguments[0], Arguments);                            //Run wc & 'exit' process
+                                
+                                printf("This shouldn't print out ever :o");                 //All this code stop existing
+                            }
+                            else {                                                          // ==== YOU ARE THE PARENT ====
+                                int WCID = wait(NULL);                                      //This return the pid of the child
+                                printf("I'm Parent of %i aka wc-%i", ChildID, WCID);        //Show me your ID then old man
+                                printf("\t(PID %i)\n", getpid());                           //Show me your ID then old man
+                            }
+                            return 0;
+                        }
+
+                    \end{lstlisting}
+
+
 
         % ==============================================
         % =====        ARBOL DE PROCESOS         =======
@@ -1020,8 +1126,6 @@
             Un árbol de procesos esta formado por un nodo raíz conocido como proceso principal, cada sistema
             operativo nombra a este proceso principal de forma particular, sin embargo, la funciòn de este proceso
             es la misma, funciona como la base para la creación de cualquier proceso en el sistema operativo.
-
-            Gráficamente un árbol de procesos básico se muestra a continuación: 
 
             El arbol de procesos clasifica los procesos en dos tipos:
 
@@ -1059,49 +1163,10 @@
 
 
 
-
-
-        % ==================================
-        % ===========    HILOS      ========
-        % ==================================
-        \section{Hilos}
-
-            Son procesos ligeros, es una alternativa a las aplicaciones concurrentes.
-
-            Un hilo es un componente de un proceso tradicional que se ejecuta en concurrencia con
-            sus proceso creador.
-
-            Para el sistema operativo es más facil crear hilos que crear un proceso tradicional, por eso se
-            le llaman procesos ligeros.
-
-            \begin{itemize}
-                \item Comparten valores de los recursos asignados a su proceso creador,
-                    siendo la memoria el principal recurso compartido
-
-                \item Manejan de manera independiente tanto al apila como el contador de programa
-                
-                \item Dependen de la ejecución de su proceso padre
-
-            \end{itemize}
-
-            Los sistemas operativos implementan sus hilos a traves de dos posibles métodos:
-            \begin{itemize}
-
-                \item Por una biblioteca a nivel usuario:
-                    Esta forma es más portable, pues basta con que el sistema computacional soporte 
-                    la libreria para que la app funcione como si nada, pero por la capa extra que le ponemos
-                    suelen ser más lentas
-
-                \item Por llamadas al sistema mediante Kernel:
-                    Es lo inverso, perdemos portabilidad, pero por otro lado ganamos velocidad
-
-            \end{itemize}
-
-
-
-
-
-
+    % ===============================================================================
+    % ====================      PLANIFICACION DE PROCESOS        ====================
+    % ===============================================================================
+    \chapter{Planificación de Procesos}
 
 
         % ==============================================
@@ -1291,6 +1356,179 @@
 
                         Debido justo a que tienen un protocolo son más lentos que las tuberías.
                 \end{itemize}
+
+
+
+
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+% ///////////////////////////         PROCESOS HILOS Y VIRTUALIZACION           ////////////////////////////
+% //////////////////////////////////////////////////////////////////////////////////////////////////////////
+\part{Hilos y Virtualización de Memoria}
+\clearpage
+
+
+    % ===============================================================================
+    % ====================              HILOS           =============================
+    % ===============================================================================
+    \chapter{Abstracción de Memoria}
+
+        % ==============================================
+        % ===========      INTRODUCCIÒN      ===========
+        % ==============================================
+        \clearpage
+        \section{Espacio de Direcciones}
+
+            Antes que nada, recuerda, al Sistema Operativo le importa virtualizar cualquier recurso del pc,
+            eso no solo quiere decir que van a virtualizar la CPU, sino también la memoria, así que grabate eso
+            muy bien, pero muy bien, TODA DIRECCIÓN DE MEMORIA DENTRO DE UN PROGRAMA ES UNA DIRECCIÓN VIRTUAL.
+
+            Podemos dividir la abstracción que nos da el Sistema Operativo en 3 partes:
+
+            \begin{itemize}
+                \item \textbf{Zona del Codigo}: Es literal la sección en la que esta el codigo, es aquí por
+                ejemplo a donde van los punteros a funciones.
+
+                \item \textbf{Stack}: Conocido también como pila, es la parte que se encarga de que mantener
+                la información de las cadenas de llamadas a funciones, es la que se usa cuando se crean variables
+                locales.
+
+                Es conocida a veces como la memoria automatica, porque cuando por ejemplo tu declaras
+                una variale en una función el compilador se encarga de reservar espacio para ella y de
+                liberarla cuando se sale de la función.
+
+                \item \textbf{Heap}: Es la que se encarga de las variables que se crean dinamicamente.
+                Por ejemplo de es la memoria que se reserva cuando se llama a $malloc()$
+
+            \end{itemize}
+
+
+            % ========================================
+            % ===========        CODE         ========
+            % ========================================
+            \subsubsection{Ve donde esta tu Memoria Virtual}
+                \begin{lstlisting}[language=C, gobble=20]
+                    /*=======================================================================
+                    =================       WHERE IS MEMORY     =============================
+                    =========================================================================
+                        USE: $ C99 CodeStackAndHeap.c && reset && ./a.out                  */
+                    #include <stdio.h>                                              //We will need this
+                    #include <stdlib.h>                                             //We will need this        
+
+                    int main(int argc, char *argv[]) {                              //Fucking main
+                        int LocalVariable;                                          //A var in stack
+                        printf("Location of Code:  %p\n", (void *) main);           //Show direction for code
+                        printf("Location of Heap:  %p\n", (void *) malloc(1));      //Show direction for heap
+                        printf("Location of Stack: %p\n", (void *) &LocalVariable); //Show direction for stack
+                        
+                        return 0;                                                   //Go little program
+                    }
+                \end{lstlisting}
+
+
+                    
+
+    % ===============================================================================
+    % ====================              HILOS           =============================
+    % ===============================================================================
+    \chapter{Hilos aka Procesos Ligeros}
+
+        % ==============================================
+        % ===========      INTRODUCCIÒN      ===========
+        % ==============================================
+        \clearpage
+        \section{Introducción}
+
+            Son procesos ligeros, es una alternativa a las aplicaciones concurrentes.
+
+            Un hilo es un componente de un proceso tradicional que se ejecuta en concurrencia con
+            sus proceso creador.
+
+            Para el sistema operativo es más facil crear hilos que crear un proceso tradicional, por eso se
+            le llaman procesos ligeros.
+
+            \begin{itemize}
+                \item Comparten valores de los recursos asignados a su proceso creador,
+                    siendo la memoria (heap) el principal recurso compartido. Nota, dije que comparten
+                    el heap, osea es donde se encuentras las variables que se crean mediante malloc o
+                    dinamicamente.
+
+                \item Manejan de manera independiente tanto la pila como el stack
+                
+                \item Dependen de la ejecución de su proceso padre, el cual es un proceso tradicional
+
+            \end{itemize}
+
+        % ==============================================
+        % ===========      HILOS            ============
+        % ==============================================
+        \clearpage
+        \section{La API de los Hilos}
+
+            % ==============================================
+            % ===========      CREACION DE HILOS     =======
+            % ==============================================
+            \subsection{Estructura de Hilos General}
+
+                Para poder interactuar con el hilo usaremos una estructura $pthread_t$
+
+
+            % ==============================================
+            % ======      CREAR HILOS      =======
+            % ==============================================
+            \subsection{Creación de Hilos}
+
+                % ========================================
+                % ===========        CODE         ========
+                % ========================================
+                \subsubsection{Ejemplo de la Declaración}
+                    \begin{lstlisting}[language=C, gobble=24]
+                        #include <pthread.h>
+                        int
+                        pthread_create( pthread_t *       ThreadID,
+                                        const pthread_attr_t *  Attributes,
+                                        void *            (*Function)(void*),
+                                        void *            Argument)
+                    \end{lstlisting}
+
+                    Veamos cada uno de los parametros:
+                    \begin{itemize}
+                        \item $ThreadID$ es un puntero a la estructura del archivo
+                        \item $Attributes$ son los atributos que tendrá el hilo, pero de forma
+                            general un $NULL$ será mas que suficiente por default
+                        \item $Function$ es la función que ejecutará el hilo, que recibe 
+                            un puntero generico como parametro y regresará un puntero generico como
+                            resultado.
+                        \item $Argument$ es exactamente el que le vas a pasar como argumento
+                    \end{itemize}
+
+
+            % ==============================================
+            % ======        COMPLETAR HILOS          =======
+            % ==============================================
+            \subsection{Esperar Hilos}
+
+                Si te gustaría esperar que acabe un hilo antes de continuar la ejecucción del
+                codigo basta con hacer algo como:
+
+                % ========================================
+                % ===========        CODE         ========
+                % ========================================
+                \subsubsection{Ejemplo de la Declaración}
+                    \begin{lstlisting}[language=C, gobble=24]
+                        #include <pthread.h>
+                        int
+                        pthread_join(   pthread_t *       ThreadID,
+                                        void **           Value)
+                    \end{lstlisting}
+
+                    Veamos cada uno de los parametros:
+                    \begin{itemize}
+                        \item $ThreadID$ es un puntero a la estructura del archivo
+                        \item $Value$ es un puntero al valor de retorno que tu esperas
+                        osea un puntero a un puntero generico
+                    \end{itemize}
+
+
 
 
 
