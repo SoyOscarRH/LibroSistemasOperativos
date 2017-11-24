@@ -276,7 +276,7 @@
             \Quote{Un sistema operativo es un programa encargado de controlar todos lor recursos de
             una computadora}
 
-            \subsection{Definición Formal}
+            \subsection{Definición Formal y Aburrida}
 
                 \Quote{Un sistema operativo es un software de base compuesto por un conjunto
                 de administradores encargados de la administración (valga la redundancia) de cada uno de
@@ -287,32 +287,36 @@
 
                 \begin{itemize}
                     \item 
-                        \textbf{Un sistema operativo es un software de base} debido a que es una plataforma que permite
-                        la creación y ejecución de aplicaciones desarrolladas para el propio sistema.
-                        Como software de base, el sistem operativo ofrece interfaces para la creación o ejecución
-                        de las aplicaciones desarrolladas.
+                        \textbf{Un sistema operativo es un software de base} debido a que es una plataforma
+                        que permite la creación y ejecución de aplicaciones desarrolladas para el propio
+                        sistema.
+                        Como software de base, el sistem operativo ofrece interfaces para la creación o 
+                        ejecución de las aplicaciones desarrolladas.
 
-                        Incluso mucha gente ve al sistema operativo como una biblioteca estandar.
+                        Incluso mucha gente ve al sistema operativo como una biblioteca estandar, como una
+                        base sobre la cual escribir mas software.
 
                     \item
-                        Un sistema operativo esta compuesto de un conjunto de administradores, los cuales controlan
-                        todos los recursos del equipo de computo, estos administradores son: 
+                        Un sistema operativo esta compuesto de un conjunto de administradores,
+                        los cuales controlan todos los recursos del equipo de computo, estos
+                        administradores son: 
 
                         \begin{itemize}
                             \item Administrador de Procesos
-                            \item Admin. de Memoria 
-                            \item Admin. de Entrada / Salida 
-                            \item Admin. de Archivos 
-                            \item Admin. de Red 
+                            \item Administrador de Memoria 
+                            \item Administrador de Entrada y Salida 
+                            \item Administrador de Archivos 
+                            \item Administrador de Red 
                         \end{itemize}
 
                     \item
-                        Un sistema operativo debe ejecutarse lo más rapido posible, evitando quitarle tiempo de
-                        procesamiento a las aplicaciones de los usuarios, por otro lado debe administrar cada uno
-                        de los recursos del equipo de cómputo de forma eficiente, maximizando el uso de cada
-                        recurso controlado. 
-                        La rápidez y eficiencia es uno de los principales u objetivos que un Sistema Operativo debe
-                        cumplir durante su ejecución.
+                        Un sistema operativo debe ejecutarse lo más rapido posible, evitando quitarle
+                        tiempo de procesamiento a las aplicaciones de los usuarios, por otro lado
+                        debe administrar cada uno de los recursos del equipo de cómputo de forma
+                        eficiente, maximizando el uso de cada recurso controlado.
+
+                        La rápidez y eficiencia es uno de los principales u objetivos que un Sistema
+                        Operativo debe cumplir durante su ejecución.
             
                 \end{itemize}
        
@@ -320,6 +324,7 @@
         % ==============================================
         % ========    TIPO DE SISTEMAS         =========
         % ==============================================
+        \clearpage
         \section{Tipo de Sistemas}
 
             \subsubsection{Sistemas Genéricos:}
@@ -331,21 +336,22 @@
 
             \subsubsection{Sistemas Especializados:}
             \begin{itemize}
-                \item Distribuidos: En estos los procesadores no comparten el mismo reloj ni memoria, son sistemas
-                    debilmente acomplados
-                \item Paralelos: Los procesadores comparten los recursos como la memoria, son sistemas fuertemente
-                    acomplados
+                \item Distribuidos: En estos los procesadores no comparten el mismo reloj ni memoria,
+                son sistemas debilmente acomplados
+
+                \item Paralelos: Los procesadores comparten los recursos como la memoria, son sistemas
+                fuertemente acomplados
             \end{itemize}     
 
         % ==============================================
         % ========      TERMINOS COMUNES       =========
         % ==============================================
         \clearpage
-        \section{Terminos Básicos}
+        \section{Terminos Básicos aka Cosas que Deberías Saber}
 
             \begin{itemize}
                 \item
-                    \textbf{Spooling: }
+                    \textbf{Spooling:}
 
                     Spool significa \Quote{Simultaneous Peripheral Operation On-Line}.
 
@@ -679,7 +685,6 @@
             % ==============================================
             % ===========       PROCESOS        ============
             % ==============================================
-            \clearpage
             \subsection{Conozcamos a los Procesos}
 
                 El Administrador de los Procesos se encarga de la gestión de cualquier trabajo
@@ -690,14 +695,14 @@
                 ejecutando que es el único en ejecucción y tiene siempre acceso a la CPU.
 
 
-                Haremos esto porqe basicamente tenemos una pequeña cantidad de procesadores y 
+                Haremos esto porque basicamente tenemos una pequeña cantidad de procesadores y 
                 muchisimos programas intentando ejecutarse al mismo tiempo.
 
                 Ahí esta la clave del problema... ¿Cómo podemos crear la ilusión de tener
                 muchísimas CPU's?
 
                 Vamos a introducir una de las abstracciones más fundamentales que nos da el 
-                sistema operativo: Los Procesos.
+                sistema operativo: \textbf{Los Procesos}.
 
                 El Sistema Operativo logra crear esta ilusión de una gran cantidad de procesadores
                 gracias a la virtualización de la CPU, es decir, gracias a estar corriendo un proceso
@@ -717,11 +722,11 @@
                 Aquí entre amigos podemos definir a un proceso como un programa en ejecución,
                 así de simple.
 
-                Podemos diferenciar un programa en ejecución de otro por el PC, es decir, 
-                por cuales instrucciones se estan ejecutando, por el valor actual de los registros,
-                la pila de punteros o cosas así, así que si vamos a asbtraer / generalizar un proceso
-                tendremos que tener una forma de almacenar dicha información que identifica a nuestros
-                programas.
+                Podemos diferenciar un programa en ejecución de otro por el PC (Program Counter),
+                es decir, por cuales instrucciones se estan ejecutando, por el valor actual de los
+                registros, la pila de punteros o cosas así, así que si vamos a asbtraer / generalizar
+                un proceso tendremos que tener una forma de almacenar dicha información que identifica
+                a nuestros programas.
 
                 Formalmente podemos decir que:
                 \Quote{Un proceso es un programa en ejecución, es la entidad mínima de software
@@ -826,7 +831,7 @@
 
                         \begin{itemize}
                             \item Páginas o segmentos usasdos por el proceso
-                            \item Tabla de pàginas o segmentos utilizados por el proceso 
+                            \item Tabla de páginas o segmentos utilizados por el proceso 
                         \end{itemize}
                 
                 \item
@@ -845,6 +850,29 @@
                 El administrador de procesos basa su operación fundamentalmente en la manipulación de los PCB
                 de los procesos actualmente en ejecución en el sistema operativo, siendo su unidad básica funcional.
         
+
+
+        % ==============================================
+        % =====     ESTADO DE LOS PROCESOS     =========
+        % ==============================================
+        \section{Estado de los Procesos}
+
+            \begin{itemize}
+                \item
+                    \textbf{Corriendo:}
+                    Creo que sobra decir nada sobre esto, es cuando un proceso esta corriendo en la CPU
+
+                \item
+                    \textbf{Listo para Correr:}
+                    Cuando se esta en este estado todo esta listo para que el proceso siga corriendo, pero
+                    por alguna razón el Sistema Operativo aun no ha decidido correrlo
+
+                \item
+                    \textbf{Bloqueado:}
+                    Se dice que un proceso esta bloqueado si es que no esta listo para volver a correr
+                    por ejemplo si es que pidio abrir un archivo, pero el disco duro aun no responde
+            \end{itemize}
+
 
 
         % ==============================================
@@ -1170,12 +1198,26 @@
 
 
         % ==============================================
-        % ===========    PROCESOS EN C      ============
+        % ===========    INTRODUCCIÒN       ============
         % ==============================================
         \clearpage
-        \section{Planificación de Procesos}
+        \section{Introducción}
+
+            Ahora que hemos visto a los procesos y como es que podemos crearlos ahora hay que ver como 
+            que podemos crear un algoritmo que nos permita decidir que proceso ejecutar en cada
+            momento.
 
 
+            % ==============================================
+            % ======   METRICAS DE PLANIFICACION    ========
+            % ==============================================
+            \subsection{Metricas de Planificación}
+
+                Si queremos encontrar el mejor algoritmo para planificar el orden en que ejecutamos
+                los procesos tenemos que decidir cual será la metrica que usaremos para decidir que 
+                tan bueno es nuestro algoritmo.
+
+                
 
             % ==============================================
             % ===========    SUSTITUCON DE CODIGO   ========
