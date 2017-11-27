@@ -1338,66 +1338,76 @@
                 global que nos permita administrar a cola global.
 
 
-            % ==============================================
-            % =====    COMUNICACION ENTRE PROCESOS  ========
-            % ==============================================
-            \subsection{Comunicación entre Procesos}
 
-                Los procesos desde el punto de vista de la comunicación pueden clasificarse en dos tipos:
 
-                \begin{itemize}
-                    \item \textbf{Procesos Independientes:}
-                        Estos son aquellos que no requieren comunicación con otros procesos para completar
-                        su ejecución.
 
-                    \item \textbf{Procesos Cooperativos:}
-                        Estos necesitan la comunicación para poder completar su ejecución
+    % ===============================================================================
+    % ====================          SINCRONIZACION               ====================
+    % ===============================================================================
+    \chapter{Sincronización}
 
-                        Estos requieren la ayuda del sistema operativo para poder llevar a cabo la comunicación,
-                        esto se hace mediante los procesos conocidos como IPC (Comunicación Inter Procesos).
-                \end{itemize}
 
-            % ==============================================
-            % ===========         IPC       ================
-            % ==============================================
-            \clearpage
-            \subsection{IPC}
+        % ==============================================
+        % =====    COMUNICACION ENTRE PROCESOS  ========
+        % ==============================================
+        \clearpage
+        \section{Comunicación entre Procesos}
 
-                \begin{itemize}
-                    \item \textbf{Tuberías}: Son archivos creados y controlados internamente por el 
-                        sistema operativo, sirven como buffers en los cuales se almacenan los datos
-                        a comunicar. implementan primitivas para la lectura y escritura de datos.
+            Los procesos desde el punto de vista de la comunicación pueden clasificarse en dos tipos:
 
-                        A final de cuentas es un archivo que crea el sistema operativo, por lo tanto
-                        podemos usar las llamadas al sistema que usamos para archivos.
+            \begin{itemize}
+                \item \textbf{Procesos Independientes:}
+                    Estos son aquellos que no requieren comunicación con otros procesos para completar
+                    su ejecución.
 
-                        Los mensajes a comunicar se manejan como mensajes sin formato. Unicamente soportan
-                        comunicación unidireccional con una conectividad uno a uno.
+                \item \textbf{Procesos Cooperativos:}
+                    Estos necesitan la comunicación para poder completar su ejecución
 
-                    \item \textbf{Memoria Compartida}:
-                        Es una región de memoria creada y controlada por el sistema operativo asociada a un
-                        proceso, la región de memoria creada se anexa al espacio de direcciones del proceso
-                        que utilizará la memoria compartida.
+                    Estos requieren la ayuda del sistema operativo para poder llevar a cabo la comunicación,
+                    esto se hace mediante los procesos conocidos como IPC (Comunicación Inter Procesos).
+            \end{itemize}
 
-                        Se accede a ella mediante un apuntador a esa región. La memoria compartida puede ser
-                        accedida por todos los procesos que lo necesiten.
+        % ==============================================
+        % ===========         IPC       ================
+        % ==============================================
+        \clearpage
+        \subsection{IPC}
 
-                        Por su naturaleza necesitamos tener una forma de sincronizar toda la información.
+            \begin{itemize}
+                \item \textbf{Tuberías}: Son archivos creados y controlados internamente por el 
+                    sistema operativo, sirven como buffers en los cuales se almacenan los datos
+                    a comunicar. implementan primitivas para la lectura y escritura de datos.
 
-                    \item \textbf{Sockets}:
-                        Son parecidos a la tuberías, sin embargo su implementación se apoya en el administrador
-                        de red.
+                    A final de cuentas es un archivo que crea el sistema operativo, por lo tanto
+                    podemos usar las llamadas al sistema que usamos para archivos.
 
-                        Todos los mensajes tiene un formato estandarizado, ya que se apoyan con el administrador
-                        de red, podemos comunicar procesos de manera local y de manera remota.
+                    Los mensajes a comunicar se manejan como mensajes sin formato. Unicamente soportan
+                    comunicación unidireccional con una conectividad uno a uno.
 
-                        El administrador de red es el que se encarga de seleccionar el protocolo que se hará entre
-                        los mensajes.
+                \item \textbf{Memoria Compartida}:
+                    Es una región de memoria creada y controlada por el sistema operativo asociada a un
+                    proceso, la región de memoria creada se anexa al espacio de direcciones del proceso
+                    que utilizará la memoria compartida.
 
-                        Recuerda que el socket es bidireccional.
+                    Se accede a ella mediante un apuntador a esa región. La memoria compartida puede ser
+                    accedida por todos los procesos que lo necesiten.
 
-                        Debido justo a que tienen un protocolo son más lentos que las tuberías.
-                \end{itemize}
+                    Por su naturaleza necesitamos tener una forma de sincronizar toda la información.
+
+                \item \textbf{Sockets}:
+                    Son parecidos a la tuberías, sin embargo su implementación se apoya en el administrador
+                    de red.
+
+                    Todos los mensajes tiene un formato estandarizado, ya que se apoyan con el administrador
+                    de red, podemos comunicar procesos de manera local y de manera remota.
+
+                    El administrador de red es el que se encarga de seleccionar el protocolo que se hará entre
+                    los mensajes.
+
+                    Recuerda que el socket es bidireccional.
+
+                    Debido justo a que tienen un protocolo son más lentos que las tuberías.
+            \end{itemize}
 
 
 
